@@ -1,0 +1,12 @@
+def filter_dataset(data):
+    filtered_data = []
+    for player in data:
+        if player['league'] in ['international', 'challengers'] and player['zscore'] > 0.46:
+            filtered_data.append(player)
+    return filtered_data
+def satisfies_constraints(team):
+    int_count = sum(1 for player in team if player['league'] == 'international')
+    amer_count = sum(1 for player in team if player['region'] == 'amer')
+    agents = [agent for player in team for agent in player['agents']]
+    
+    return int_count >= 3 and amer_count >= 2 and len(set(agents)) == 5
