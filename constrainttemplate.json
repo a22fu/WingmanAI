@@ -1,0 +1,43 @@
+{
+    "region":
+    {
+        "amer":[5,5],
+        "emea":[0,0],
+        "ap":[0,0],
+        "cn":[0,0]
+    },
+    "league":
+    {
+        "gc":[2,2],
+        "international":[3,3],
+        "challengers": [0,0]
+    },
+    "org":
+    {
+        "C9":[0,1],
+        "TL":[0,3]
+    },
+    "player":
+    {
+        "TenZ": true
+    },
+    "stats": {
+        "rounds_played": 380, 
+        "rating": 1, 
+        "average_combat_score": 200, 
+        "kill_deaths": 1, 
+        "kill_assists_survived_traded": 0, 
+        "average_damage_per_round": 0, 
+        "kills_per_round": 0.7, 
+        "assists_per_round": 0.29, 
+        "first_kills_per_round": 0, 
+        "first_deaths_per_round": 0, 
+        "headshot_percentage": 27, 
+        "clutch_success_percentage": 14, 
+        "zscore": 0.46},
+    "agents": {
+        "agentCount": 10,
+        "initiators": 3,
+        "omen":1
+    }
+}

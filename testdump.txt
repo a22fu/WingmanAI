@@ -1,3 +1,0 @@
-
-Input:Create a Valorant team with 3 international players and 2 from the Americas, focusing on balanced roles across all agents.
-Output:
