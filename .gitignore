@@ -3,3 +3,29 @@ data/
 dataprocessingScripts/
 game-changers/
 __pycache__/
+
+##########################
+# frontend
+##########################
+
+# dependencies
+frontend/vct-chatbot/node_modules
+frontend/vct-chatbot/.pnp
+frontend/vct-chatbot/.pnp.js
+
+# testing
+frontend/vct-chatbot/coverage
+
+# production
+frontend/vct-chatbot/build
+
+# misc
+frontend/vct-chatbot/.DS_Store
+frontend/vct-chatbot/.env.local
+frontend/vct-chatbot/.env.development.local
+frontend/vct-chatbot/.env.test.local
+frontend/vct-chatbot/.env.production.local
+
+frontend/vct-chatbot/npm-debug.log*
+frontend/vct-chatbot/yarn-debug.log*
+frontend/vct-chatbot/yarn-error.log*
