@@ -27,7 +27,6 @@ export default function SearchWindow() {
       <ChatInput
         onSendMessage={onSearch}
       >
-
       </ChatInput>
     </div>
   );
