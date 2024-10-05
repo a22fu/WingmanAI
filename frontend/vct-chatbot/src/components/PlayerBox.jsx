@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 
-import {useDroppable} from '@dnd-kit/core';
+import { useDroppable } from "@dnd-kit/core";
 import {
+  horizontalListSortingStrategy,
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-
 import PlayerCard from "./PlayerCard";
-
 
 const containerStyle = {
   height: "10vw",
@@ -25,14 +24,14 @@ export default function PlayerBox(props) {
   const { id, items } = props;
 
   const { setNodeRef } = useDroppable({
-    id
+    id,
   });
 
   return (
     <SortableContext
       id={id}
       items={items}
-      strategy={verticalListSortingStrategy}
+      strategy={horizontalListSortingStrategy}
     >
       <div ref={setNodeRef} style={containerStyle}>
         {items.map((id) => (
@@ -42,4 +41,3 @@ export default function PlayerBox(props) {
     </SortableContext>
   );
 }
-

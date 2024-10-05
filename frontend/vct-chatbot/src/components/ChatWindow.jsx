@@ -1,15 +1,14 @@
 // components/ChatWindow.js
-import React, { useState } from 'react';
-import ChatMessage from './ChatMessage';
-import ChatInput from './ChatInput';
+import React, { useState } from "react";
+import ChatMessage from "./ChatMessage";
+import ChatInput from "./ChatInput";
 // App.js
-import PlayerBox from './PlayerBox.jsx';
+import PlayerBox from "./PlayerBox.jsx";
 import {
   DndContext,
   KeyboardSensor,
   PointerSensor,
   DragOverlay,
-
   useSensor,
   useSensors,
   closestCorners,
@@ -41,9 +40,8 @@ const defaultAnnouncements = {
   },
   onDragCancel(id) {
     console.log(`Dragging was cancelled. Draggable item ${id} was dropped.`);
-  }
+  },
 };
-
 
 const teamContext = {
   flexDirection: "row",
@@ -52,11 +50,10 @@ const teamContext = {
   justifyContent: "center",
   border: "1px solid black",
 
-  background: "white"
+  background: "white",
 };
 
 const ChatWindow = ({ messages, onSendMessage }) => {
-
   const [items, setItems] = useState({
     container1: ["1"],
     container2: ["2"],
@@ -69,13 +66,12 @@ const ChatWindow = ({ messages, onSendMessage }) => {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates
+      coordinateGetter: sortableKeyboardCoordinates,
     })
   );
   return (
     <div className="chat-window">
       <DndContext
-        style={teamContext}
         announcements={defaultAnnouncements}
         sensors={sensors}
         collisionDetection={closestCorners}
@@ -91,15 +87,15 @@ const ChatWindow = ({ messages, onSendMessage }) => {
           <PlayerBox id="container5" items={items.container5} />
         </div>
       </DndContext>
-      
+
       <div className="chat-messages">
         {messages.map((msg, index) => (
           <ChatMessage key={index} sender={msg.sender} text={msg.text} />
         ))}
       </div>
-  
-  <ChatInput onSendMessage={onSendMessage} />
-</div>
+
+      <ChatInput onSendMessage={onSendMessage} />
+    </div>
   );
   function findContainer(id) {
     if (id in items) {
@@ -141,16 +137,12 @@ const ChatWindow = ({ messages, onSendMessage }) => {
       const activeIndex = activeItems.indexOf(id);
       const overIndex = overItems.indexOf(overId);
 
-      let temp = items[activeContainer][activeIndex]
+      let temp = items[activeContainer][activeIndex];
 
       return {
         ...prev,
-        [activeContainer]: [
-          items[overContainer][activeIndex],
-        ],
-        [overContainer]: [
-          temp,
-        ]
+        [activeContainer]: [items[overContainer][activeIndex]],
+        [overContainer]: [temp],
       };
     });
   }
@@ -176,7 +168,7 @@ const ChatWindow = ({ messages, onSendMessage }) => {
 
     if (activeIndex !== overIndex) {
       setItems((items) => ({
-        ...items
+        ...items,
       }));
     }
 
