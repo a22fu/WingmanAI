@@ -11,10 +11,15 @@ import PlayerCard from "./PlayerCard";
 
 
 const containerStyle = {
+  height: "10vw",
+  width: "10vw",
   background: "#dadada",
   padding: 10,
   margin: 10,
-  flex: 1
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  border: "1px solid black",
 };
 export default function PlayerBox(props) {
   const { id, items } = props;
