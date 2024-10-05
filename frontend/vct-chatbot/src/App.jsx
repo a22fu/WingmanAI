@@ -1,45 +1,150 @@
-// App.js
 import React, { useState } from "react";
 import ChatWindow from "./components/ChatWindow.jsx";
 import buildTeam from "./API/buildAPI.js";
-import PlayerBox from "./components/PlayerBox.jsx";
 import PlayerCard from "./components/PlayerCard.jsx";
 import {
+  DragOverlay,
   DndContext,
   KeyboardSensor,
   PointerSensor,
-  DragOverlay,
   useSensor,
   useSensors,
   closestCorners,
 } from "@dnd-kit/core";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
 import "./App.css";
 import SearchWindow from "./components/SearchWindow.jsx";
 
 function App() {
+  const [items, setItems] = useState({
+    container1: [],
+    container2: ["2"],
+    container3: ["3"],
+    container4: ["4"],
+    container5: ["5"],
+    container6: ["6"],
+  });
+
+  const [activeId, setActiveId] = useState();
+  const defaultAnnouncements = {
+    onDragStart(id) {
+      console.log(`Picked up draggable item ${id}.`);
+    },
+    onDragOver(id, overId) {
+      if (overId) {
+        console.log(`Draggable item ${id} was moved over droppable area ${overId}.`);
+        return;
+      }
+      console.log(`Draggable item ${id} is no longer over a droppable area.`);
+    },
+    onDragEnd(id, overId) {
+      if (overId) {
+        console.log(`Draggable item ${id} was dropped over droppable area ${overId}`);
+        return;
+      }
+      console.log(`Draggable item ${id} was dropped.`);
+    },
+    onDragCancel(id) {
+      console.log(`Dragging was cancelled. Draggable item ${id} was dropped.`);
+    },
+  };
+  
   const [messages, setMessages] = useState([]);
 
   const handleSendMessage = async (message) => {
-    console.log(message + "received");
+    console.log(message + " received");
     if (message.trim() !== "") {
-      // Add user message to chat
       const newMessages = [...messages, { sender: "user", text: message }];
       setMessages(newMessages);
 
-      // Simulate AI response (you would replace this with an actual API call)
       const aiResponse = await buildTeam(message);
       setMessages([...newMessages, { sender: "bot", text: aiResponse }]);
     }
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor)
+  );
+
   return (
     <div className="App">
-      <SearchWindow></SearchWindow>
-      <ChatWindow messages={messages} onSendMessage={handleSendMessage} />
+      <DndContext
+        announcements={defaultAnnouncements}
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
+        <SearchWindow items = {items} hiddenIds={[activeId]}/>
+        <ChatWindow messages={messages} onSendMessage={handleSendMessage} items={items} hiddenIds={[activeId]} // Pass activeId here
+        />
+        <DragOverlay>
+          {activeId ? <PlayerCard id={activeId} playerId={activeId} /> : null}
+        </DragOverlay>
+      </DndContext>
     </div>
   );
+
+  function findContainer(id) {
+    if (id in items) {
+      return id;
+    }
+
+    return Object.keys(items).find((key) => items[key].includes(id));
+  }
+
+  function handleDragStart(event) {
+    const { active } = event;
+    const { id } = active;
+    setActiveId(id);
+  }
+
+  function handleDragOver(event) {
+    const { active, over } = event;
+    if (!over) return;
+    console.log("drag over", active, over);
+    // This function just tracks the drag movement but doesn't trigger a swap.
+  }
+
+  function handleDragEnd(event) {
+    const { active, over } = event;
+    if (!over) return;
+
+    const { id: activeId } = active;
+    const { id: overId } = over;
+
+    const activeContainer = findContainer(activeId);
+    const overContainer = findContainer(overId);
+
+    if (!activeContainer || !overContainer) {
+      return;
+    }
+
+    // Swap positions in the containers
+    if (activeContainer !== overContainer) {
+      setItems((prevItems) => {
+        const activeItem = prevItems[activeContainer][0];
+        const overItem = prevItems[overContainer][0];
+        if(overItem){ // swap or place if doesnt exist
+        return {
+          ...prevItems,
+          [activeContainer]: [overItem], // Place the overItem in the active container
+          [overContainer]: [activeItem], // Place the activeItem in the over container
+        };
+      }else{
+        return {
+          ...prevItems,
+          [activeContainer]: [], // Place the overItem in the active container
+          [overContainer]: [activeItem], // Place the activeItem in the over container
+        };
+      }
+      });
+    }
+
+    setActiveId(null); // Reset active item
+  }
 }
 
 export default App;
