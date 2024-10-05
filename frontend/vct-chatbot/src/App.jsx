@@ -16,6 +16,7 @@ import {
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
 import "./App.css";
+import SearchWindow from "./components/SearchWindow.jsx";
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -35,7 +36,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="search-window"></div>
+      <SearchWindow></SearchWindow>
       <ChatWindow messages={messages} onSendMessage={handleSendMessage} />
     </div>
   );
