@@ -15,3 +15,20 @@ import {
   closestCorners,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+
+export default function SearchWindow() {
+  const onSearch = async (search) => {
+    console.log(search + "received");
+    
+  };
+
+  return (
+    <div className='search-window'> 
+      <ChatInput
+        onSendMessage={onSearch}
+      >
+
+      </ChatInput>
+    </div>
+  );
+}
