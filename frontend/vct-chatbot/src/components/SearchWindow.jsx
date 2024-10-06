@@ -11,7 +11,7 @@ export default function SearchWindow({items, hiddenIds}) {
     gridTemplateColumns: `repeat(${5}, 1fr)`,  // 5 columns
     gridGap: '10px',                          // Spacing between grid items
     padding: '10px',
-    
+
     gridAutoRows: 'auto',                     // Ensures rows take only as much height as needed
     alignItems: 'start',                      // Align items at the start of each row
   };
