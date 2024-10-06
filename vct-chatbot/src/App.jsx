@@ -14,15 +14,15 @@ import {
 
 import "./App.css";
 import SearchWindow from "./components/SearchWindow.jsx";
-
+import playerdata from "./players/playerdata.jsx";
 function App() {
   const [items, setItems] = useState({
-    container1: [],
+    container1: ["1"],
     container2: ["2"],
     container3: ["3"],
     container4: ["4"],
     container5: ["5"],
-    container6: ["6"],
+    container6: playerdata,
   });
 
   const [activeId, setActiveId] = useState();
@@ -74,14 +74,13 @@ function App() {
         sensors={sensors}
         collisionDetection={closestCorners}
         onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <SearchWindow items = {items} hiddenIds={[activeId]}/>
+        <SearchWindow items = {items} hiddenIds={[]}/>
         <ChatWindow messages={messages} onSendMessage={handleSendMessage} items={items} hiddenIds={[activeId]} // Pass activeId here
         />
         <DragOverlay>
-          {activeId ? <PlayerCard id={activeId} playerId={activeId} /> : null}
+          {(activeId) ? <PlayerCard id={activeId} playerId={activeId} /> : null}
         </DragOverlay>
       </DndContext>
     </div>
@@ -101,23 +100,16 @@ function App() {
     setActiveId(id);
   }
 
-  function handleDragOver(event) {
-    const { active, over } = event;
-    if (!over) return;
-    console.log("drag over", active, over);
-    // This function just tracks the drag movement but doesn't trigger a swap.
-  }
-
   function handleDragEnd(event) {
     const { active, over } = event;
     if (!over) return;
 
     const { id: activeId } = active;
     const { id: overId } = over;
-
+    console.log(event);
     const activeContainer = findContainer(activeId);
     const overContainer = findContainer(overId);
-
+    
     if (!activeContainer || !overContainer) {
       return;
     }
@@ -125,22 +117,60 @@ function App() {
     // Swap positions in the containers
     if (activeContainer !== overContainer) {
       setItems((prevItems) => {
-        const activeItem = prevItems[activeContainer][0];
-        const overItem = prevItems[overContainer][0];
+        var activeItem = activeId;
+        var overItem = overId;
+        if(activeId.includes("container")){
+          activeItem = prevItems[activeContainer][0];
+        }
+        if(overId.includes("container")){
+          overItem = prevItems[overContainer][0];
+        }
+
         if(overItem){ // swap or place if doesnt exist
+
+          if(overContainer === "container6"){
+            return {
+              ...prevItems,
+              [activeContainer]: [], // Place the overItem in the active container
+              [overContainer]: [...prevItems[overContainer], activeItem], // Place the activeItem in the over container
+            };
+          }else if(activeContainer === "container6"){
+            return {
+              ...prevItems,
+              [activeContainer]: prevItems[activeContainer].map(item =>
+                item === activeItem ? overItem : item // Replace activeItem with overItem
+              ),
+              [overContainer]: [activeItem], // Append activeItem to overContainer
+            };
+          }else{
+            
         return {
           ...prevItems,
           [activeContainer]: [overItem], // Place the overItem in the active container
           [overContainer]: [activeItem], // Place the activeItem in the over container
         };
+      
+    }
       }else{
+        if(activeContainer === "container6"){
+          console.log("asda")
+          return {
+            ...prevItems,
+            [activeContainer]: prevItems[activeContainer].filter(item =>
+              item !== activeItem  // Replace activeItem with overItem
+            ),
+            [overContainer]: [activeItem], // Append activeItem to overContainer
+          };
+        }else{
         return {
           ...prevItems,
           [activeContainer]: [], // Place the overItem in the active container
           [overContainer]: [activeItem], // Place the activeItem in the over container
         };
       }
-      });
+    }    
+  }
+    );
     }
 
     setActiveId(null); // Reset active item

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import {useDroppable} from '@dnd-kit/core';
 import {
-  horizontalListSortingStrategy,
+  rectSortingStrategy,
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -11,37 +11,41 @@ import {
 import PlayerCard from "./PlayerCard";
 
 
-const containerStyle = {
-  height: "10vw",
-  width: "10vw",
-  background: "#dadada",
-  padding: 10,
-  margin: 10,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  border: "1px solid black",
-};
-export default function PlayerBox(props) {
-  const { id, items,hiddenIds} = props;
 
+export default function PlayerBox(props) {
+  const { id, items,hiddenIds, containerStyle, search} = props;
+  
   const { setNodeRef } = useDroppable({
     id
   });
+  var map;
+  console.log(items)
+  if (search != null){
+    map = items.filter((item) => {
+      return search.toLowerCase() === '' ? item : item.toLowerCase().includes(search.toLowerCase());
+    }).map((item) =>
+      (hiddenIds.includes(item)) ? null : ( // Hide the dragged item from its original container
+        <PlayerCard key={item} id={item} playerId={item} container = {id}/>
+      )
+    )
+  }else{
+    map = items.map((item) =>
+      (hiddenIds.includes(item)) ? null : ( // Hide the dragged item from its original container
+        <PlayerCard key={item} id={item} playerId={item} container = {id}/>
+      )
+    )
+  }
 
   return (
     <SortableContext
       id={id}
       items={items}
-      strategy={horizontalListSortingStrategy}
+      strategy={rectSortingStrategy}
       hiddenIds = {hiddenIds}
-    >
+      >
       <div ref={setNodeRef} style={containerStyle}>
-      {items.map((item) =>
-        (hiddenIds.includes(item)) ? null : ( // Hide the dragged item from its original container
-          <PlayerCard key={item} id={item} playerId={item} />
-        )
-      )}
+      
+      {map}
       </div>
     </SortableContext>
   );
