@@ -1,6 +1,5 @@
 // components/ChatWindow.js
 import {useState} from 'react';
-import ChatInput from './ChatInput';
 import PlayerBox from './PlayerBox';
 export default function SearchWindow({items, hiddenIds}) {
   const [search, setSearch] = useState('');
@@ -22,9 +21,8 @@ export default function SearchWindow({items, hiddenIds}) {
       <input
         type="text"
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Type your message..."
+        placeholder="Search for player..."
       />
-      <button>Send</button>
         </div>
         <div className='grid-wrap'>
           <PlayerBox containerStyle = {containerStyle} 

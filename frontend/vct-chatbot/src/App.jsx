@@ -33,7 +33,8 @@ function App() {
     if (message.trim() !== "") {
       const newMessages = [...messages, { sender: "user", text: message }];
       setMessages(newMessages);
-
+      const loadingResponse = [...newMessages, {sender: "bot", text: "..."}];
+      setMessages(loadingResponse)
       const aiResponse = await buildTeam(message, setItems);
       setMessages([...newMessages, { sender: "bot", text: aiResponse }]);
     }
