@@ -16,8 +16,7 @@ import test_suite
 class vctAgent:
 
     def __init__(self):
-        # Prepare the tool configuration with the weather tool's specification
-        # Create a Bedrock Runtime client in the specified AWS Region.
+
         self.bedrock_runtime = boto3.client(service_name='bedrock-runtime')
         self.model_id = 'anthropic.claude-3-sonnet-20240229-v1:0'
         self.system_prompt = FILTER_INPUT_TEMPLATE_STR
@@ -31,7 +30,6 @@ class vctAgent:
                 "tools": [scripts.geneticalg.get_genalg_spec()]
             }  
         
-
         self.logger = logging.getLogger(__name__)
         logging.basicConfig(level=logging.INFO)
 
@@ -73,7 +71,6 @@ class vctAgent:
         """
 
         if model_response["stop_reason"] == "tool_use":
-            # If the stop reason is "tool_use", forward everything to the tool use handler
             return self._handle_tool_use(model_response)
         else:
             return model_response
@@ -90,18 +87,14 @@ class vctAgent:
         :param max_recursion: The maximum number of recursive calls allowed.
         """
 
-        # Initialize an empty list of tool results
         tool_results = []
 
-        # The model's response can consist of multiple content blocks
         for i in range(len(model_response["content"])):
             if model_response["content"][i]["type"] == "text":
-                # If the content block contains text, print it to the console
                 continue
             elif model_response["content"][i]["type"] == "tool_use":
                 tool_response = self._invoke_tool(model_response["content"][i])
 
-                # Add the tool use ID and the tool's response to the list of results
                 
         return tool_response["content"]
 
@@ -120,7 +113,6 @@ class vctAgent:
             input_data = payload["input"]
 
             # Invoke the weather tool with the input data provided by
-            print(input_data["constraint_data"])
             response = scripts.geneticalg.genetic_algorithm(input_data["constraint_data"])
         else:
             error_message = (

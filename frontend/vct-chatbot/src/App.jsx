@@ -17,39 +17,16 @@ import SearchWindow from "./components/SearchWindow.jsx";
 import playerdata from "./players/playerdata.jsx";
 function App() {
   const [items, setItems] = useState({
-    container1: ["1"],
-    container2: ["2"],
-    container3: ["3"],
-    container4: ["4"],
-    container5: ["5"],
+    container1: [],
+    container2: [],
+    container3: [],
+    container4: [],
+    container5: [],
     container6: playerdata,
   });
-
-  const [activeId, setActiveId] = useState();
-  const defaultAnnouncements = {
-    onDragStart(id) {
-      console.log(`Picked up draggable item ${id}.`);
-    },
-    onDragOver(id, overId) {
-      if (overId) {
-        console.log(`Draggable item ${id} was moved over droppable area ${overId}.`);
-        return;
-      }
-      console.log(`Draggable item ${id} is no longer over a droppable area.`);
-    },
-    onDragEnd(id, overId) {
-      if (overId) {
-        console.log(`Draggable item ${id} was dropped over droppable area ${overId}`);
-        return;
-      }
-      console.log(`Draggable item ${id} was dropped.`);
-    },
-    onDragCancel(id) {
-      console.log(`Dragging was cancelled. Draggable item ${id} was dropped.`);
-    },
-  };
-  
   const [messages, setMessages] = useState([]);
+  const [activeId, setActiveId] = useState();
+
 
   const handleSendMessage = async (message) => {
     console.log(message + " received");
@@ -57,7 +34,7 @@ function App() {
       const newMessages = [...messages, { sender: "user", text: message }];
       setMessages(newMessages);
 
-      const aiResponse = await buildTeam(message);
+      const aiResponse = await buildTeam(message, setItems);
       setMessages([...newMessages, { sender: "bot", text: aiResponse }]);
     }
   };
@@ -70,7 +47,6 @@ function App() {
   return (
     <div className="App">
       <DndContext
-        announcements={defaultAnnouncements}
         sensors={sensors}
         collisionDetection={closestCorners}
         onDragStart={handleDragStart}
@@ -106,7 +82,6 @@ function App() {
 
     const { id: activeId } = active;
     const { id: overId } = over;
-    console.log(event);
     const activeContainer = findContainer(activeId);
     const overContainer = findContainer(overId);
     
@@ -153,7 +128,6 @@ function App() {
     }
       }else{
         if(activeContainer === "container6"){
-          console.log("asda")
           return {
             ...prevItems,
             [activeContainer]: prevItems[activeContainer].filter(item =>

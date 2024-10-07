@@ -8,7 +8,7 @@ export default function SearchWindow({items, hiddenIds}) {
     width: "20vw",
   
     display: 'grid',
-    gridTemplateColumns: `repeat(${5}, 1fr)`,  // 5 columns
+    gridTemplateColumns: `repeat(${4}, 1fr)`,  // 5 columns
     gridGap: '10px',                          // Spacing between grid items
     padding: '10px',
 
