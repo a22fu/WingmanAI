@@ -35,8 +35,18 @@ function App() {
       setMessages(newMessages);
       const loadingResponse = [...newMessages, {sender: "bot", text: "..."}];
       setMessages(loadingResponse)
-      const aiResponse = await buildTeam(message, setItems);
-      setMessages([...newMessages, { sender: "bot", text: aiResponse }]);
+
+      try{
+        const aiResponse = await buildTeam(message, setItems);
+        setMessages([...newMessages, { sender: "bot", text: aiResponse }]);
+      }
+
+      catch(error){
+        console.warn(error)
+        setMessages([...newMessages, { sender: "bot", text: "There was an error with your last prompt. Please try again." }]);
+
+      }
+
     }
   };
 
