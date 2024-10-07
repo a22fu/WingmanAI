@@ -19,7 +19,6 @@ export default function PlayerBox(props) {
     id
   });
   var map;
-  console.log(items)
   if (search != null){
     map = items.filter((item) => {
       return search.toLowerCase() === '' ? item : item.toLowerCase().includes(search.toLowerCase());
