@@ -28,7 +28,7 @@ async function buildTeam(user_input, setItems) {
               container2: [response.data[1]],
               container3: [response.data[2]],
               container4: [response.data[3]],
-              container5: [response.data[4]],
+              container5: [response.data[4]], 
           
               // Add old items from container1 - container5 to container6, keeping previous values in container6
               container6: [...prevItems.container6.filter(item => !response.data.includes(item)), ...oldItems],
