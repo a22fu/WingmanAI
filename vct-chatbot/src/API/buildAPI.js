@@ -8,6 +8,10 @@ async function buildTeam(user_input, setItems) {
         const response = await axios.post('http://localhost:5000/build_team', {
             parameters: user_input, // Ensure user_input is correctly structured
         });
+        console.log(response.data)
+        if (!Array.isArray(response.data)) {
+          return response.data.content[0].text
+        }
         var string = "Here's your requested team: "
         for(const x of response.data){
             string = string + x + ", "
@@ -40,7 +44,7 @@ async function buildTeam(user_input, setItems) {
         return string.substring(0, string.length - 2); // Return the response data for further processing
     } catch (error) {
         console.error('Error:', error);
-        // Optionally, return an error message or handle it further
+        throw error
     }
 };
 

@@ -17,6 +17,7 @@ export function Item(props) {
     position: "relative", // Set position to relative for absolute positioning of text
     overflow: "hidden", // Ensures no overflow from the container
     transition: "width 0.3s ease, height 0.3s ease", // Apply transition here
+    cursor: 'move',
   };
 
   const imgStyle = {
