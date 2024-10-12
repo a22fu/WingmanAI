@@ -1,160 +1,103 @@
-# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# SPDX-License-Identifier: Apache-2.0
-"""
-Shows how to generate a message with Anthropic Claude (on demand).
-"""
 import boto3
-import json
-import logging
-
+from botocore.client import BaseClient
 from botocore.exceptions import ClientError
 
-import API.geneticalg
-from prompt_templates import CREATE_TEAM_TEMPLATE_STR, FILTER_INPUT_TEMPLATE_STR
-import test_suite
-
-class vctAgent:
-
-    def __init__(self):
-
-        self.bedrock_runtime = boto3.client(service_name='bedrock-runtime')
-        self.model_id = 'anthropic.claude-3-sonnet-20240229-v1:0'
-        self.system_prompt = FILTER_INPUT_TEMPLATE_STR
-        self.max_tokens = 1000
-        self.anthropic_version = "bedrock-2023-05-31"
-        self.body={
-                "anthropic_version": self.anthropic_version,
-                "max_tokens": self.max_tokens,
-                "system": self.system_prompt,
-                "messages": "",
-                "tools": [API.geneticalg.get_genalg_spec()]
-            }  
-        
-        self.logger = logging.getLogger(__name__)
-        logging.basicConfig(level=logging.INFO)
+from prompt_templates import CREATE_TEAM_TEMPLATE_STR
 
 
+# load_dotenv()
+# agent_role = os.environ.get('AGENT_ROLE')
 
-    def generate_message(self, messages):
 
-        self.body["messages"] = messages
-        
-        response = self.bedrock_runtime.invoke_model(body=json.dumps(self.body), modelId=self.model_id)
-        response_body = json.loads(response.get('body').read())
+class VctClient():
+    def __init__(self,
+                 region_name="us-east-1"):
+        self.region_name = region_name
 
-        return response_body
-    
-    def handle_input(self, input_text):
-        user_message =  {"role": "user", "content": input_text}
-        messages = [user_message]
-        response = self.generate_message(messages)
-
-    def create_team_response(self, input_text):
-        user_message =  {"role": "user", "content": input_text}
-        self.body["system"] = CREATE_TEAM_TEMPLATE_STR
-        messages = [user_message]
-
-        response = self.generate_message(messages)
-        response = self._process_model_response(response)
-        return response
-    
-    def _process_model_response(
-        self, model_response
-    ):
-        if model_response["stop_reason"] == "tool_use":
-            return self._handle_tool_use(model_response)
+    def return_runtime_client(self, run_time=True) -> BaseClient:
+        if run_time:
+            bedrock_client = boto3.client(
+                service_name="bedrock-agent-runtime",
+                region_name=self.region_name)
         else:
-            return model_response
-    
-    def _handle_tool_use(
-        self, model_response
-    ):
-        """
-        Handles the tool use case by invoking the specified tool and sending the tool's response back to Bedrock.
-        The tool response is appended to the conversation, and the conversation is sent back to Amazon Bedrock for further processing.
+            bedrock_client = boto3.client(
+                service_name="bedrock-agent",
+                region_name=self.region_name)
 
-        :param model_response: The model's response containing the tool use request.
-        :param conversation: The conversation history.
-        :param max_recursion: The maximum number of recursive calls allowed.
-        """
+        return bedrock_client
 
-        tool_results = []
-
-        for i in range(len(model_response["content"])):
-            if model_response["content"][i]["type"] == "text":
-                continue
-            elif model_response["content"][i]["type"] == "tool_use":
-                tool_response = self._invoke_tool(model_response["content"][i])
-
-                
-        return tool_response["content"]
-
-
-    def _invoke_tool(self, payload):
-        """
-        Invokes the specified tool with the given payload and returns the tool's response.
-        If the requested tool does not exist, an error message is returned.
-
-        :param payload: The payload containing the tool name and input data.
-        :return: The tool's response or an error message.
-        """
-
-        tool_name = payload["name"]
-        if tool_name == "genetic_alg_tool":
-            input_data = payload["input"]
-
-            # Invoke the weather tool with the input data provided by
-            response = API.geneticalg.genetic_algorithm(input_data["constraint_data"])
+    def list_agents(self):
+        try:
+            available_agents = []
+            bedrock_client = self.return_runtime_client(run_time=False)
+            agents = bedrock_client.list_agents()
+            for agent in agents["agentSummaries"]:
+                agent_status = agent["agentStatus"]
+                if agent_status == "PREPARED":
+                    agent_name = agent["agentName"]
+                    available_agents.append(agent_name)
+        except ClientError as e:
+            print(e)
+            raise
         else:
-            error_message = (
-                f"The requested tool with name '{tool_name}' does not exist."
+            return available_agents
+
+    
+
+    def invoke_bedrock_agent(self,
+                             agent_id,
+                             agent_alias_id,
+                             session_id,
+                             prompt=None):
+
+        completion = ""
+        traces =[]
+        try:
+            bedrock_client = self.return_runtime_client(run_time=True)
+            response = bedrock_client.invoke_agent(
+                agentId=agent_id,
+                agentAliasId=agent_alias_id,
+                sessionId=session_id,
+                inputText=prompt,
+                sessionState={
+        'knowledgeBaseConfigurations': [
+            {
+                'knowledgeBaseId': 'MMUTW03GYI',
+                'retrievalConfiguration': {
+                    'vectorSearchConfiguration': {
+                       
+                        'numberOfResults': 20,
+                    }
+                }
+            },
+        ]
+                }
             )
-            response = {"error": "true", "message": error_message}
+            for event in response.get("completion"):
+                try:
+                    trace = event["trace"]
+                    traces.append(trace['trace'])
+                except KeyError:
+                    chunk = event["chunk"]
+                    completion = completion + chunk["bytes"].decode()
+                except Exception as e:
+                    print(e)
 
-        return {"toolUseId": payload["id"], "content": response}
+        except ClientError as e:
+            print(e)
 
-        
-    # for x in test_suite.create_team_prompts:
-    #     ex = testAgent.create_team_response(x)
-    #     with open("testdump.txt", 'a') as f:
-    #         f.write("Input:" + x)
-    #         f.write("Output:" + ex["content"][0]["text"])
-    #   
-    # 
-    # 
-    # for x in test_suite.edit_team_prompts:
-    #     testAgent.handle_input(x)
-    # for x in test_suite.valorant_news_stats_prompts:
-    #     testAgent.handle_input(x)
-    # for x in test_suite.other_prompts:
-    #     testAgent.handle_input(x)
+        return completion, traces
 
-        #     bedrock_runtime = boto3.client(service_name='bedrock-runtime')
 
-        #     model_id = 'anthropic.claude-3-sonnet-20240229-v1:0'
-        #     system_prompt = CREATE_TEAM_TEMPLATE_STR
-        #     max_tokens = 1000
+if __name__ == "__main__":
+    bedrock_client = VctClient()
+    # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
-        #     # Prompt with user turn only.
-        #     user_input = input("Create your valorant team:")
+    # agents = bedrock_client.list_agents()
+    # print(agents)
 
-        #     user_message =  {"role": "user", "content": user_input}
-        #     messages = [user_message]
-
-        #     response = generate_message (bedrock_runtime, model_id, system_prompt, messages, max_tokens)
-        #     constraints = json.loads(response["content"][0]["text"])
-        #     dataset = geneticalg.get_data_set('vlr90.json', constraints)
-        #     results = geneticalg.genetic_algorithm(dataset, constraints)
-        #     print("Here is an example team:\n")
-        #     zsum = 0
-        #     for x in results:
-        #         zsum += x["zscore"]
-        #         print(x["player"])
-        #     print(zsum)
-
-        # except ClientError as err:
-        #     message=err.response["Error"]["Message"]
-        #     logger.error("A client error occurred: %s", message)
-        #     print("A client error occured: " +
-        #         format(message))
-
+    response,traces = bedrock_client.invoke_bedrock_agent(agent_id="VMPZXQYLQ0",
+                                                   agent_alias_id="2THA8OIJOW",
+                                                   session_id="session_01",
+                                                   prompt = CREATE_TEAM_TEMPLATE_STR + "create a team of 5 VCT international players?")
+    print(response)
