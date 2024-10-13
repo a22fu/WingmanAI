@@ -4,27 +4,6 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 // App.js
 import PlayerBox from "./PlayerBox.jsx";
-import {
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  DragOverlay,
-  useSensor,
-  useSensors,
-  closestCorners,
-} from "@dnd-kit/core";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-
-
-const teamContext = {
-  flexDirection: "row",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  border: "1px solid black",
-
-  background: "white",
-};
 
 const ChatWindow = ({ messages, onSendMessage, items, hiddenIds }) => { 
   

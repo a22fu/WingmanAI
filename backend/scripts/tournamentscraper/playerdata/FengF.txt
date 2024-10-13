@@ -1,7 +1,8 @@
-FengF plays in the China region and VCT International league. FengF from participated in the following tournaments:
-- In Valorant Champions 2024, They played on team Trace Esports, finished 7th–8th and placing them in the middle 50%. FengF was playing decently with a rating of 0.95, with a first contact per round of 0.27.
+FengF plays in the China region and VCT International league. FengF participated in the following tournaments:
+- In Valorant Champions 2024, They played on team Trace Esports, finished 7th–8th and placed in the middle 50%. FengF was playing decently with a rating of 0.95, with a first contact per round of 0.27.
 FengF played the following agents in Valorant Champions 2024:
-  - played 46 rounds on killjoy, playing decently with a rating of 1.12 and first contact per round of 0.24. played 144 rounds on raze, playing poorly with a rating of 0.89 and first contact per round of 0.28. played 18 rounds on cypher, playing decently with a rating of 0.91 and first contact per round of 0.28.
-- In Champions Tour 2024: China Stage 2, They played on team Trace Esports, finished 3rd and placing them in the middle 50%. FengF was playing poorly with a rating of 0.0, with a first contact per round of 0.26.
+  - played 46 rounds on killjoy, playing decently with a rating of 1.12 and first contact per round of 0.24. played 144 rounds on raze, struggling with a rating of 0.89 and first contact per round of 0.28. played 18 rounds on cypher, playing decently with a rating of 0.91 and first contact per round of 0.28.
+- In Champions Tour 2024: China Stage 2, They played on team Trace Esports, finished 3rd and placed in the middle 50%. FengF was struggling with a rating of 0, with a first contact per round of 0.26.
 FengF played the following agents in Champions Tour 2024: China Stage 2:
-  - played 178 rounds on killjoy, playing poorly with a rating of 0.0 and first contact per round of 0.17. played 332 rounds on raze, playing poorly, and aggressively with a rating of 0.0 and first contact per round of 0.31.
+  - played 178 rounds on killjoy, invalid rating with a rating of N/A and first contact per round of 0.17. played 332 rounds on raze, invalid rating, and aggressively with a rating of N/A and first contact per round of 0.31.
+FengF had an overall performance of struggling with a rating of 0.47.

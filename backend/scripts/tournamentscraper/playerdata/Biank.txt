@@ -1,7 +1,8 @@
-Biank plays in the China region and VCT International league. Biank from participated in the following tournaments:
-- In Valorant Champions 2024, They played on team Trace Esports, finished 7th–8th and placing them in the middle 50%. Biank was playing poorly with a rating of 0.82, with a first contact per round of 0.21.
+Biank plays in the China region and VCT International league. Biank participated in the following tournaments:
+- In Valorant Champions 2024, They played on team Trace Esports, finished 7th–8th and placed in the middle 50%. Biank was struggling with a rating of 0.82, with a first contact per round of 0.21.
 Biank played the following agents in Valorant Champions 2024:
-  - played 129 rounds on sova, playing poorly with a rating of 0.81 and first contact per round of 0.22. played 63 rounds on skye, playing decently with a rating of 0.91 and first contact per round of 0.21. played 16 rounds on fade, playing poorly with a rating of 0.54 and first contact per round of 0.12.
-- In Champions Tour 2024: China Stage 2, They played on team Trace Esports, finished 3rd and placing them in the middle 50%. Biank was playing poorly with a rating of 0.0, with a first contact per round of 0.21.
+  - played 129 rounds on sova, struggling with a rating of 0.81 and first contact per round of 0.22. played 63 rounds on skye, playing decently with a rating of 0.91 and first contact per round of 0.21. played 16 rounds on fade, struggling with a rating of 0.54 and first contact per round of 0.12.
+- In Champions Tour 2024: China Stage 2, They played on team Trace Esports, finished 3rd and placed in the middle 50%. Biank was struggling with a rating of 0, with a first contact per round of 0.21.
 Biank played the following agents in Champions Tour 2024: China Stage 2:
-  - played 293 rounds on sova, playing poorly with a rating of 0.0 and first contact per round of 0.2. played 96 rounds on fade, playing poorly with a rating of 0.0 and first contact per round of 0.24. played 100 rounds on skye, playing poorly with a rating of 0.0 and first contact per round of 0.22. played 21 rounds on kayo, playing poorly, and defensively with a rating of 0.0 and first contact per round of 0.1.
+  - played 293 rounds on sova, invalid rating with a rating of N/A and first contact per round of 0.2. played 96 rounds on fade, invalid rating with a rating of N/A and first contact per round of 0.24. played 100 rounds on skye, invalid rating with a rating of N/A and first contact per round of 0.22. played 21 rounds on kayo, invalid rating, and defensively with a rating of N/A and first contact per round of 0.1.
+Biank had an overall performance of struggling with a rating of 0.41.

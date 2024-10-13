@@ -1,7 +1,8 @@
-NeskaaS plays in the Europe, Middle East and Africa region and VCT Challengers league. NeskaaS from participated in the following tournaments:
-- In Champions Tour 2024 EMEA: Ascension, They played on team VALIANT, finished Unknown placement and placing them unknown. NeskaaS was playing decently with a rating of 0.99, with a first contact per round of 0.2.
+NeskaaS plays in the Europe, Middle East and Africa region and VCT Challengers league. NeskaaS participated in the following tournaments:
+- In Champions Tour 2024 EMEA: Ascension, They played on team VALIANT, finished Unknown placement and placed unknown. NeskaaS was playing decently with a rating of 0.99, with a first contact per round of 0.2.
 NeskaaS played the following agents in Champions Tour 2024 EMEA: Ascension:
-  - played 106 rounds on killjoy, playing poorly with a rating of 0.74 and first contact per round of 0.22. played 63 rounds on brimstone, performing well with a rating of 1.27 and first contact per round of 0.14. played 84 rounds on cypher, playing decently with a rating of 1.11 and first contact per round of 0.21.
-- In Challengers League 2024 France: Revolution Split 2, They played on team VALIANT, finished 2nd and placing them in the top 25%. NeskaaS was playing decently with a rating of 0.93, with a first contact per round of 0.21.
+  - played 106 rounds on killjoy, struggling with a rating of 0.74 and first contact per round of 0.22. played 63 rounds on brimstone, performing well with a rating of 1.27 and first contact per round of 0.14. played 84 rounds on cypher, playing decently with a rating of 1.11 and first contact per round of 0.21.
+- In Challengers League 2024 France: Revolution Split 2, They played on team VALIANT, finished 2nd and placed in the top 25%. NeskaaS was playing decently with a rating of 0.93, with a first contact per round of 0.21.
 NeskaaS played the following agents in Challengers League 2024 France: Revolution Split 2:
-  - played 249 rounds on killjoy, playing decently with a rating of 0.98 and first contact per round of 0.22. played 221 rounds on cypher, playing decently with a rating of 0.91 and first contact per round of 0.19. played 63 rounds on brimstone, playing poorly with a rating of 0.83 and first contact per round of 0.27.
+  - played 249 rounds on killjoy, playing decently with a rating of 0.98 and first contact per round of 0.22. played 221 rounds on cypher, playing decently with a rating of 0.91 and first contact per round of 0.19. played 63 rounds on brimstone, struggling with a rating of 0.83 and first contact per round of 0.27.
+NeskaaS had an overall performance of playing decently with a rating of 0.96.
