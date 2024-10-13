@@ -3,19 +3,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f4f4f4;
+  height: 100vh;
+}
+
+body,html {
+  margin: 0;
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
 }
 
 .chat-window {
-  width: 70vw;
-  height: 70vh;
+  font-size: 30px;
+  width: 100%;
+  height: 100%;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+
 }
+
 
 .team-slots{
   width: 10vw;
@@ -23,6 +34,7 @@
 }
 
 .player-container {
+  padding-top: 5%;
   display: flex;
   justify-content: center;
   margin: 20px 0;
@@ -30,36 +42,99 @@
 }
 
 .grid-wrap{
-  height:67vh;
+  height:95vh;
   background-color:red;
   overflow-y: auto; /* This will enable vertical scrolling */
   padding: 10px;
 }
 
 .chat-messages {
-  flex: 1;
-  overflow: scroll;
+  overflow-y: auto; /* Hide vertical scrollbar */
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+
 }
 
 .user-message, .bot-message {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  max-width: 75%;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  max-width: 90%;
+  align-self: flex-end;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .user-message {
   background-color: #DCF8C6;
-  align-self: flex-end;
+
 }
 
 .bot-message {
-  background-color: #F1F0F0;
+  background-color: #f8c6c6;
+
   align-self: flex-start;
 }
 
+.input-container {
+
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+  border-radius: 40px;
+  width: 100%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-input {
+  font-size: 30px;
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 30px;
+  outline: none;
+  background-color: white;
+  border: none
+}
+
+.send-button {
+  background-color: #4CAF50; /* Button background color */
+  border: none;
+  color: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%; /* Make it circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #45a049;
+}
+
+.feather-upload {
+  width: 24px;
+  height: 24px;
+}
+
+/* Optional: Adjust the icon style */
+.send-button:hover .feather-upload {
+  stroke: white;
+}
+
+
 .chat-input {
+
   display: flex;
   padding: 10px;
   border-top: 1px solid #ddd;
@@ -67,20 +142,11 @@
 }
 
 .chat-input input {
+  font-size: 30px;
+
   flex: 1;
   padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
 
-.chat-input button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  margin-left: 10px;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .chat-input button:hover {
