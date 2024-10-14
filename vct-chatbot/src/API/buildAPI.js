@@ -74,7 +74,7 @@ async function buildTeam(user_input, setItems) {
         console.log(response)
         const data = parseValorantOutput(response.data)
 
-        if (data["players"] != []){
+        if (data["players"] !== []){
             setItems(prevItems => {
                 const oldItems = [
                 ...prevItems.container1,
