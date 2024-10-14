@@ -1,5 +1,5 @@
 // components/ChatWindow.js
-import React, { useState } from "react";
+import React from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 // App.js
