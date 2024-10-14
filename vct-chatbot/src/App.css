@@ -54,11 +54,21 @@ body,html {
   background-color:#2A2A2E;
   overflow-y: auto; /* This will enable vertical scrolling */
   padding-right: 10px;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
 }
-.grid-wrap::-webkit-scrollbar {
-  display: none;
+
+::-webkit-scrollbar-track {
+  background: #3E3E3E; /* Dark grey color, you can choose any color you like */
+}
+
+/* This part changes the scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background: #6e6e6e; /* Medium grey color, this is the actual scrollbar */
+}
+
+/* You can also change the scrollbar width and height */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the vertical scrollbar */
+  height: 12px; /* Height of the horizontal scrollbar */
 }
 
 .chat-messages {
