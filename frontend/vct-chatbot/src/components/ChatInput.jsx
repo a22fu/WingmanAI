@@ -18,6 +18,9 @@ const ChatInput = ({ onSendMessage }) => {
   return (
     <div className="chat-input">
       <div className="input-container">
+      <div class="valorant-icon">
+  <img src="../resources/vallogo.png" ></img>
+</div>
   <input
     type="text"
     value={inputValue}
