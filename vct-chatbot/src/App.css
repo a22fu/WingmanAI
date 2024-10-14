@@ -41,7 +41,6 @@ body,html {
 }
 
 .player-container {
-  
   padding-top: 5%;
   display: flex;
   justify-content: center;
@@ -50,7 +49,6 @@ body,html {
 }
 
 .grid-wrap{
-  
   height:95vh;
   background-color:red;
   overflow-y: auto; /* This will enable vertical scrolling */
