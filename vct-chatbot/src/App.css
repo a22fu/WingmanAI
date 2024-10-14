@@ -16,10 +16,10 @@ body,html {
 }
 
 .chat-window {
-  font-size: 30px;
+  font-size: 20px;
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: #fafafa;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -44,13 +44,13 @@ body,html {
   padding-top: 5%;
   display: flex;
   justify-content: center;
-  margin: 20px 0;
   gap: 10px; /* Optional: space between the containers */
+  background-color: #f2f2f2f2;
 }
 
 .grid-wrap{
   height:95vh;
-  background-color:red;
+  background-color:#b38c8f;
   overflow-y: auto; /* This will enable vertical scrolling */
   padding: 10px;
 }
@@ -63,7 +63,7 @@ body,html {
   height: 100%;
   width: 100%;
   margin: auto;
-
+  background-color: #f2f2f2f2;
 }
 
 .user-message, .bot-message {
@@ -83,8 +83,7 @@ body,html {
 }
 
 .bot-message {
-  background-color: #f8c6c6;
-
+  background-color: #eeeeee;
   align-self: flex-start;
 }
 
@@ -99,8 +98,39 @@ body,html {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.player-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  background: white;
+  position: relative;
+  overflow: hidden;
+  transition: width 0.3s ease, height 0.3s ease; 
+  cursor: move;
+}
+
+.player-card .player-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.player-card .player-text {
+  position: absolute;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  text-align: center;
+  width: 90%;
+}
+
 .message-input {
-  font-size: 30px;
+  font-size: 20px;
   flex-grow: 1;
   padding: 10px;
   border-radius: 30px;
@@ -110,7 +140,7 @@ body,html {
 }
 
 .send-button {
-  background-color: #4CAF50; /* Button background color */
+  background-color: #fd4556; /* Button background color */
   border: none;
   color: white;
   width: 55px;
@@ -140,7 +170,6 @@ body,html {
 
 
 .chat-input {
-
   display: flex;
   padding: 10px;
   border-top: 1px solid #ddd;
@@ -148,8 +177,7 @@ body,html {
 }
 
 .chat-input input {
-  font-size: 30px;
-
+  font-size: 20px;
   flex: 1;
   padding: 10px;
 
