@@ -57,7 +57,7 @@ body,html {
 
 .chat-messages {
   overflow-y: auto; /* Hide vertical scrollbar */
-  padding: 15px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
