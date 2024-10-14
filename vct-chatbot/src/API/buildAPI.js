@@ -63,18 +63,23 @@ function parseValorantOutput(output) {
 
 
 
-async function buildTeam(user_input, setItems) {
+async function buildTeam(user_input, items, setItems) {
     try {
         console.log(user_input); // Log for debugging; consider removing or using a logger in production
 
         // Send a POST request to the Flask API
+        const team = items.container1.concat(items.container2).concat(items.container3).concat(items.container4).concat(items.container5)
+        console.log(team)
         const response = await axios.post('http://localhost:5000/build_team', {
-            parameters: user_input, // Ensure user_input is correctly structured
+            parameters: {
+                user_input,
+                current_team: team
+            }
         });
         console.log(response)
         const data = parseValorantOutput(response.data)
 
-        if (data["players"] !== []){
+        if (data["players"] != []){
             setItems(prevItems => {
                 const oldItems = [
                 ...prevItems.container1,
