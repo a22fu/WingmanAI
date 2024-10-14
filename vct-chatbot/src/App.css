@@ -1,10 +1,18 @@
-/* App.css */
+@font-face {
+  font-family: Tungsten;
+  src: local(''), url(../public/resources/EM-Tungsten/Tungsten-Black.otf);
+}
+
 .App {
+  height: 100vh;
+}
+
+.main {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f4f4f4;
-  height: 100vh;
+  height: 95vh;
 }
 
 body,html {
@@ -46,12 +54,30 @@ body,html {
   display: flex;
   justify-content: center;
   gap: 10px; /* Optional: space between the containers */
-  background-color: #1C1C1E;
+  background-color: #2A2A2E;
+}
+
+.top{
+  display: flex;
+  background-color: #FF4655;
+  height: 5vh;
+  color: black;
+  font-size: 4.5vh;
+  font-weight: bold;
+  font-family: Tungsten;
+
+}
+.top img{
+  max-width:100%;
+  max-height: 100%;
+  margin: 5px 5px;
+  justify-content: center;
+  align-items: center;
 }
 
 .grid-wrap{
-  height:93vh;
-  background-color:#2A2A2E;
+  height:88vh;
+  background-color: #1C1C1E;
   overflow-y: auto; /* This will enable vertical scrolling */
   padding-right: 10px;
 }
@@ -79,7 +105,7 @@ body,html {
   height: 100%;
   width: 100%;
   margin: auto;
-  background-color: #1C1C1E;
+  background-color: #2A2A2E;
 }
 
 .user-message, .bot-message {
@@ -105,13 +131,13 @@ body,html {
 }
 
 .input-container {
-
   display: flex;
   align-items: center;
-  background-color: #1C1C1E;
+  background-color: #3C3C41;
   padding: 10px;
   border-radius: 40px;
   width: 100%;
+  margin: 5px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -120,7 +146,7 @@ body,html {
   align-items: center;
   justify-content: center;
   border: 1px solid black;
-  background: #1C1C1E;
+  background: #2A2A2E;
   position: relative;
   overflow: hidden;
   transition: width 0.3s ease, height 0.3s ease; 
@@ -190,7 +216,6 @@ body,html {
 .chat-input {
   display: flex;
   padding: 10px;
-  border-top: 1px solid #ddd;
   background-color: #1C1C1E;
 }
 
