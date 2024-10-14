@@ -10,7 +10,7 @@ const ChatInput = ({ onSendMessage }) => {
   };
   
   const handleEnter = (e) => {
-    if(e.key == 'Enter'){
+    if(e.key === 'Enter'){
       handleSend()
     }
   };
@@ -19,7 +19,7 @@ const ChatInput = ({ onSendMessage }) => {
     <div className="chat-input">
       <div className="input-container">
         <div className="valorant-icon">
-          <img src="../resources/vallogo.png" ></img>
+          <img src="../resources/vallogo.png" alt="val-logo" ></img>
         </div>
         <input
           type="text"
@@ -30,7 +30,7 @@ const ChatInput = ({ onSendMessage }) => {
           className="message-input"
         />
         <button onClick={handleSend} className="send-button">
-          <img width="37px" height="37px" src="../resources/send-svgrepo-com.svg"/>
+          <img width="37px" height="37px" src="../resources/send-svgrepo-com.svg" alt="Enter"/>
         </button>
         </div>
 
