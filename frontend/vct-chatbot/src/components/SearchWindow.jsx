@@ -19,7 +19,6 @@ export default function SearchWindow({items, hiddenIds}) {
     <div className='search-window'> 
       <div className="chat-input player-search">
       <input
-        style={{marginTop:"20px"}}
         type="text"
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search for player..."
