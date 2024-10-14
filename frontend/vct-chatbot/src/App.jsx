@@ -57,19 +57,25 @@ function App() {
 
   return (
     <div className="App">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCorners}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-      >
-        <SearchWindow items = {items} hiddenIds={[]}/>
-        <ChatWindow messages={messages} onSendMessage={handleSendMessage} items={items} hiddenIds={[activeId]} // Pass activeId here
-        />
-        <DragOverlay>
-          {(activeId) ? <PlayerCard id={activeId} playerId={activeId} /> : null}
-        </DragOverlay>
-      </DndContext>
+      <div class="top">
+        <img src="../resources/vct_logo.png" alt="val-logo" ></img>
+          VCT Esports Manager
+        </div>
+      <div className="main">
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
+          <SearchWindow items = {items} hiddenIds={[]}/>
+          <ChatWindow messages={messages} onSendMessage={handleSendMessage} items={items} hiddenIds={[activeId]} // Pass activeId here
+          />
+          <DragOverlay>
+            {(activeId) ? <PlayerCard id={activeId} playerId={activeId} /> : null}
+          </DragOverlay>
+        </DndContext>
+      </div>
     </div>
   );
 
