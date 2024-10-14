@@ -1,26 +1,18 @@
-FILTER_INPUT_TEMPLATE_STR = """You are a model in charge of categorizing inputs for a Valorant llm team building app. 
-You are a model to determine which of 4 categories an input falls into. For context, the existing team is [dummy test team, ignore for now],
-there is a change that it is empty.
-1. Create a team prompt: Where the user asks to create a team given a set of criteria
-Examples:
-2. Edit an existing team prompt: Where the user asks to edit, add, remove or alter an existing team.
-Examples:
-3. General Valorant news/stats question: Where the user asks for general valorant news questions or statistics question.
-Examples:
-4. Other: Every other input that cannot be ascribed to one of the prior inputs.
-Your output should only be the corresponding number from 1-4 for which you can best describe the input and nothing else.
+CATEGORIZE_TEMPLATE_STR = """
+Categorize the above input into one of 4 categories:
+1. A request to create a Valorant professional team, potentially given some parameters and requests
+2. A request to edit, change or improve in some way a given Valorant professional team, including add X player, take out a smokes, make the team more aggressive
+3. A general question related to Valorant esports or stats.
+4. An unrelated input that doesn't fit any category
+Your output must only contain the number of the category that you think best fits the input and nothing else.
 """
 
-
-NEW_TEAM_TEMPLATE_STR = """
-Please start the response with a JSON array of player names, followed by three ^^^, and then provide player descriptions and analysis in text. Ensure the array is formatted as ["player1", "player2", "player3", "player4", "player5"].
+CREATE_TEAM_TEMPLATE_STR = """
 Try to make the best team possible prioritizing:
 1. Firstly, high ratings above 1.2 in tournaments
 2. Secondly, high placements with teams in tournaments
 3. Third, Having at least one of each agent role on the team, (duelist, controller, sentinel, initiator, flex(someone shown to play multiple roles)). 
 
-If I ask for more aggressive playstyle, first contact per round above 0.3 and duelist players
-if I ask for more defensive playstyles, first contact per round less than 0.1 and sentinel players
 you MUST return five unique players, make do if you can't find optimal choices
 
 A team should should try to include as many of the following roles as possible and it should be considered a weakness if there isn't one
@@ -38,20 +30,48 @@ A team should should try to include as many of the following roles as possible a
 
 Include a detailed explanation of each choice you made, and strengths and weaknesses of the team
 do not under any circumstances mention search results or sources in the output
-do not under any circumstances mention specific ratings or first contact per round, only say how well they are performing or how aggressive they play instead.
+do not under any circumstances mention specific rating numbers or first contact per round, only say how well they are performing or their offensive vs defensive roles on the team.
 """
 
+PARSE_CREATE_TEAM_TEMPLATE_STR = """
+You will receive an output from a Valorant team creator bot that creates a team composition. Your task is to parse the output and organize the information into distinct tags for further use in a program.
 
-CREATE_TEAM_TEMPLATE_STR = """
-You are a Valorant team building bot, and will be asked to assist a user in creating a team of 5 professional Valorant players. You will be provided with a user input/request to edit, improve or create a team of five valorant players. 
-No matter what the input, you are trying to make the best team possible meaning you should prioritize:
+If the output is for creating or editing a team composition, it will include a list of players, strengths, weaknesses, and possibly new players if the team is being edited. Separate the output into the following categories:
+
+[players]: This should include the final team of five players.
+[strengths]: A list or description of the team’s strengths.
+[weaknesses]: A list or description of the team’s weaknesses.
+[original_output]: The original output string from the Valorant team creator bot.
+
+Make sure that each section is wrapped in distinct exit tags and that only relevant sections are included. For example:
+
+[players]
+Player1, Player2, Player3, Player4, Player5
+[/players]
+
+[strengths]
+Strong agent synergy, High fragging power
+[/strengths]
+
+[weaknesses]
+Lack of experience on certain maps
+[/weaknesses]
+
+[original_output]
+<Original bot output here>
+[/original_output]
+
+If any sections (such as weaknesses) are not relevant, you can omit those sections. The input is as follows: \n
+"""
+
+EDIT_TEAM_TEMPLATE_STR = """
+Try to make the best team possible prioritizing, while editing the original team.
+Consider:
 1. Firstly, high ratings above 1.2 in tournaments
 2. Secondly, high placements with teams in tournaments
 3. Third, Having at least one of each agent role on the team, (duelist, controller, sentinel, initiator, flex(someone shown to play multiple roles)). 
-Also 
-If the user asks for more aggressive playstyle, first contact per round above 0.3 and duelist players
-if the user asks for more defensive playstyles, first contact per round less than 0.1 and sentinel players
-If the user asks for a team, you MUST return five unique players. 
+
+you MUST return five unique players, make do if you can't find optimal choices
 
 A team should should try to include as many of the following roles as possible and it should be considered a weakness if there isn't one
     "smokes": ["omen", "brimstone", "viper", "astra", "harbor", "clove"],
@@ -66,8 +86,38 @@ A team should should try to include as many of the following roles as possible a
     "duelist": ["jett", "neon", "phoenix", "raze", "reyna", "yoru", "iso"],
     "initiator": ["breach", "fade", "gekko", "kayo", "skye", "sova"]
 
-Include a detailed explanation of each choice you made, and strengths and weaknesses of the team
+Include a detailed explanation of each choice you made, and improvements on the old team and potential weaknesses compared to the old team.
 do not under any circumstances mention search results or sources in the output
-do not under any circumstances mention specific ratings or first contact per round, only say how well they are performing or how aggressive they play instead.
-Begin each output with an array of the five players, followed by ^^^
+do not under any circumstances mention specific rating numbers or first contact per round, only say how well they are performing or their offensive vs defensive roles on the team.
+"""
+
+PARSE_EDIT_TEAM_TEMPLATE_STR = """"
+You will receive an output from a Valorant team editor bot that creates a team composition. Your task is to parse the output and organize the information into distinct tags for further use in a program.
+
+If the output is for creating or editing a team composition, it will include a list of players, strengths, weaknesses, and possibly new players if the team is being edited. Separate the output into the following categories:
+
+[players]: This should include the new team of five players, reflecting any edits if new players were added or swapped
+[strengths]: A list or description of the team’s improvements.
+[weaknesses]: A list or description of the team’s weaknesses compared to the old team.
+[original_output]: The original output string from the Valorant team editor bot.
+
+Make sure that each section is wrapped in distinct exit tags and that only relevant sections are included. For example:
+
+[players]
+Player1, Player2, Player3, Player4, Player5
+[/players]
+
+[strengths]
+Strong agent synergy, High fragging power
+[/strengths]
+
+[weaknesses]
+Lack of experience on certain maps
+[/weaknesses]
+
+[original_output]
+<Original bot output here>
+[/original_output]
+
+If any sections (such as weaknesses) are not relevant, you can omit those sections. The input is as follows: \n
 """

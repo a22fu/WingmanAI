@@ -2,67 +2,10 @@ import boto3
 from botocore.client import BaseClient
 from botocore.exceptions import ClientError
 import uuid
-CREATE_TEAM_TEMPLATE_STR = """
-Try to make the best team possible prioritizing:
-1. Firstly, high ratings above 1.2 in tournaments
-2. Secondly, high placements with teams in tournaments
-3. Third, Having at least one of each agent role on the team, (duelist, controller, sentinel, initiator, flex(someone shown to play multiple roles)). 
+import json
+from tests.prompt_tests_suite import create_team_prompts, edit_team_prompts, valorant_news_stats_prompts, other_prompts
+from prompt_templates import *
 
-you MUST return five unique players, make do if you can't find optimal choices
-
-A team should should try to include as many of the following roles as possible and it should be considered a weakness if there isn't one
-    "smokes": ["omen", "brimstone", "viper", "astra", "harbor", "clove"],
-    "entry": ["reyna", "phoenix", "yoru", "iso"],
-    "intel_gatherer": ["sova", "fade", "cypher","gekko","skye"],
-    "lurker": ["cypher", "omen", "chamber", "yoru", "viper", "killjoy"],
-    "flank_watch": ["killjoy", "cypher", "chamber","vyse"],
-    "flash_initiator": ["skye", "kayo", "breach", "phoenix","reyna","gekko"],
-    "movement_duelist": ["reyna", "raze", "neon", "jett", "yoru"]
-    "controller": ["astra", "brimstone", "harbor", "omen", "viper", "clove"],
-    "sentinel": ["chamber", "cypher", "killjoy", "sage", "vyse"],
-    "duelist": ["jett", "neon", "phoenix", "raze", "reyna", "yoru", "iso"],
-    "initiator": ["breach", "fade", "gekko", "kayo", "skye", "sova"]
-
-Include a detailed explanation of each choice you made, and strengths and weaknesses of the team
-do not under any circumstances mention search results or sources in the output
-do not under any circumstances mention specific rating numbers or first contact per round, only say how well they are performing or their offensive vs defensive roles on the team.
-
-"""
-PARSE_TEAM_TEMPLATE_STR = """
-You will receive an output from a Valorant team creator bot that either creates or edits a team composition or answers a general Valorant-related question. Your task is to parse the output and organize the information into distinct tags for further use in a program.
-
-If the output is for creating or editing a team composition, it will include a list of players, strengths, weaknesses, and possibly new players if the team is being edited. Separate the output into the following categories:
-
-[players]: This should include the final team of five players, reflecting any edits if new players were added or swapped. If no edits were requested, it will include the original five players.
-[strengths]: A list or description of the team’s strengths.
-[weaknesses]: A list or description of the team’s weaknesses.
-[original_output]: The original output string from the Valorant team creator bot.
-If the output is an answer to a general Valorant-related question, just return the output under the [general_response] tag, without separating it into the team composition structure.
-
-Make sure that each section is wrapped in distinct exit tags and that only relevant sections are included. For example:
-
-[players]
-Player1, Player2, Player3, Player4, Player6
-[/players]
-
-[strengths]
-Strong agent synergy, High fragging power
-[/strengths]
-
-[weaknesses]
-Lack of experience on certain maps
-[/weaknesses]
-
-[original_output]
-<Original bot output here>
-[/original_output]
-
-[general_response]
-<For general Valorant answers, if applicable>
-[/general_response]
-If an edit was requested, ensure that [players] reflects the new final team with any edits included.
-If any sections (such as weaknesses) are not relevant, you can omit those sections. The input is as follows: \n
-"""
 
 # load_dotenv()
 # agent_role = os.environ.get('AGENT_ROLE')
@@ -72,6 +15,8 @@ class VctClient():
     def __init__(self,
                  region_name="us-east-1"):
         self.region_name = region_name
+        self.agentId = "VMPZXQYLQ0"
+        self.agentAlias = "T076UHLG01"
 
     def return_runtime_client(self, run_time=True) -> BaseClient:
         if run_time:
@@ -84,24 +29,6 @@ class VctClient():
                 region_name=self.region_name)
 
         return bedrock_client
-
-    def list_agents(self):
-        try:
-            available_agents = []
-            bedrock_client = self.return_runtime_client(run_time=False)
-            agents = bedrock_client.list_agents()
-            for agent in agents["agentSummaries"]:
-                agent_status = agent["agentStatus"]
-                if agent_status == "PREPARED":
-                    agent_name = agent["agentName"]
-                    available_agents.append(agent_name)
-        except ClientError as e:
-            print(e)
-            raise
-        else:
-            return available_agents
-
-    
 
     def invoke_bedrock_agent(self,
                              agent_id,
@@ -146,16 +73,49 @@ class VctClient():
             print(e)
 
         return completion
+    
+    def categorize_input(self, input):
+        client = boto3.client("bedrock-runtime", region_name="us-east-1")
+
+        # Set the model ID, e.g., Claude 3 Haiku.
+        model_id = "anthropic.claude-instant-v1"
+        native_request = {
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 100,
+            "temperature": 0,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [{"type": "text", "text": input + CATEGORIZE_TEMPLATE_STR}],
+                }
+            ],
+        }
+        request = json.dumps(native_request)
+        response = client.invoke_model(modelId=model_id, body=request)
+        model_response = json.loads(response["body"].read())
+
+        # Extract and print the response text.
+        response_text = model_response["content"][0]["text"]
+        return response_text
 
     def create_team(self, input, uuid):
-        raw = self.invoke_bedrock_agent(agent_id="VMPZXQYLQ0",
-                                                agent_alias_id="T076UHLG01",
+        raw = self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                agent_alias_id=self.agentAlias,
                                                 session_id= uuid,
                                                 prompt = input + CREATE_TEAM_TEMPLATE_STR)
-        return self.invoke_bedrock_agent(agent_id="VMPZXQYLQ0",
-                                                    agent_alias_id="T076UHLG01",
+        return self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                    agent_alias_id=self.agentAlias,
                                                     session_id=uuid,
-                                                    prompt = PARSE_TEAM_TEMPLATE_STR + raw)
+                                                    prompt = PARSE_CREATE_TEAM_TEMPLATE_STR + raw)
+    def edit_team(self, input, uuid):
+        raw = self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                agent_alias_id=self.agentAlias,
+                                                session_id= uuid,
+                                                prompt = input + EDIT_TEAM_TEMPLATE_STR)
+        return self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                    agent_alias_id=self.agentAlias,
+                                                    session_id=uuid,
+                                                    prompt = PARSE_EDIT_TEAM_TEMPLATE_STR + raw)
  
 
 if __name__ == "__main__":
@@ -165,12 +125,29 @@ if __name__ == "__main__":
     # agents = bedrock_client.list_agents()
     # print(agents)
 
-    response = bedrock_client.invoke_bedrock_agent(agent_id="VMPZXQYLQ0",
-                                                   agent_alias_id="T076UHLG01",
-                                                   session_id="1234",
-                                                   prompt = "create a team of 3 gc players and 2 international players`\n" + CREATE_TEAM_TEMPLATE_STR)
-    response = bedrock_client.invoke_bedrock_agent(agent_id="VMPZXQYLQ0",
-                                                   agent_alias_id="T076UHLG01",
-                                                   session_id="1234",
-                                                   prompt = PARSE_TEAM_TEMPLATE_STR + response)
-    print(response)
+    # response = bedrock_client.invoke_bedrock_agent(agent_id="VMPZXQYLQ0",
+    #                                                agent_alias_id="T076UHLG01",
+    #                                                session_id="1234",
+    #                                                prompt = "create a team of 3 gc players and 2 international players`\n" + CREATE_TEAM_TEMPLATE_STR)
+    # response = bedrock_client.invoke_bedrock_agent(agent_id="VMPZXQYLQ0",
+    #                                                agent_alias_id="T076UHLG01",
+    #                                                session_id="1234",
+    #                                                prompt = PARSE_TEAM_TEMPLATE_STR + response)
+    # for x in create_team_prompts:
+    #     print(x)
+    #     response = bedrock_client.categorize_input(x)
+    #     print(response)
+
+    # for x in edit_team_prompts:
+    #     print(x)
+    #     response = bedrock_client.categorize_input(x)
+    #     print(response)
+    # for x in valorant_news_stats_prompts:
+    #     print(x)
+    #     response = bedrock_client.categorize_input(x)
+    #     print(response)
+    # for x in other_prompts:
+    #     print(x)
+    #     response = bedrock_client.categorize_input(x)
+        
+        

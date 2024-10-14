@@ -37,7 +37,7 @@ function App() {
       setMessages(loadingResponse)
 
       try{
-        const aiResponse = await buildTeam(message, setItems);
+        const aiResponse = await buildTeam(message, items, setItems);
         setMessages([...newMessages, { sender: "bot", text: aiResponse }]);
       }
 

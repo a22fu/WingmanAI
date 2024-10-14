@@ -9,24 +9,39 @@ CORS(app)
 
 @app.route('/build_team', methods=['POST'])
 def build_team():
-    # Get the input data from the request
     data = request.get_json()
 
-    # Ensure the data is valid and contains the necessary fields
+
+
     if not data or 'parameters' not in data:
         return jsonify({'error': 'Invalid input'}), 400
 
-    # Instantiate the TeamBuilder class with the data
     team_builder = VctClient()
 
+    category = team_builder.categorize_input(data)
+    sessionId = str(uuid.uuid4())
+    match category:
+        case "1":
+            # Create team
+            parameters = data['parameters']
+
+            result = team_builder.create_team(parameters, sessionId)
+
+            return result
+        case "2":
+            # Edit team
+            return "Not found"
+        case "3":
+            # Valorant Info
+            return "I'm a teapot"
+        case "4":
+            # Other
+            return "I'm a teapot"
+        # Failed
+        case _:
+            return "Something's wrong with the internet"
     # Extract parameters from the incoming data
-    parameters = data['parameters']
 
-    # Call the method from the class to build the team using the parameters
-    result = team_builder.create_team(parameters, str(uuid.uuid4()))
-
-    # Return the result as a JSON response
-    return result
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
