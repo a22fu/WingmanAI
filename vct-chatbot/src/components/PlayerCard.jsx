@@ -12,7 +12,7 @@ export function Item(props) {
   };
   var image = data[id]
   if (!image){
-    image = "https://www.vlr.gg/img/base/ph/sil.png"
+    image = "../resources/blank_player.png"
   }
   return (
     <div style={style} className="player-card">
