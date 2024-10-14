@@ -8,4 +8,3 @@ Boostio played the following agents in Champions Tour 2024: Masters Shanghai:
 - In Champions Tour 2024: Americas Stage 1, They played on team 100 Thieves, finished 1st and placed in the top 25%. Boostio was struggling with a rating of 0.81, with a first contact per round of 0.21.
 Boostio played the following agents in Champions Tour 2024: Americas Stage 1:
   - played 100 rounds on killjoy, struggling with a rating of 0.77 and first contact per round of 0.26. played 246 rounds on gekko, struggling with a rating of 0.81 and first contact per round of 0.17. played 111 rounds on cypher, struggling with a rating of 0.82 and first contact per round of 0.25.
-Boostio had an overall performance of struggling with a rating of 0.56.

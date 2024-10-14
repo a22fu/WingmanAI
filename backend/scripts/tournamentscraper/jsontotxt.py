@@ -9,13 +9,13 @@ import json
     
 #     # Print the byte in hexadecimal format
 #     print(f'Byte at position 40403: {byte_value.hex()}')
-with open(r'backend\scripts\playernames.json', 'r') as file:
-    playernames = json.load(file)
-print(len(playernames))
-with open(r'backend/scripts/tournamentscraper/output.json', 'r', encoding='utf-8', errors='replace') as file:
-    data = json.load(file)
-with open(r'backend\API\vlr90.json', 'r') as file:
-    regionleague = json.load(file)
+# with open(r'backend\scripts\playernames.json', 'r') as file:
+#     playernames = json.load(file)
+# print(len(playernames))
+# with open(r'backend/scripts/tournamentscraper/output.json', 'r', encoding='utf-8', errors='replace') as file:
+#     data = json.load(file)
+# with open(r'backend\API\vlr90.json', 'r') as file:
+#     regionleague = json.load(file)
 def calculate_placement(placement_str):
     try:
         if "–" in placement_str:
@@ -193,8 +193,33 @@ def unicode_convert():
 
 # Convert JSON to text
 
+import os
 
-generate_player_based_narrative(data)
+def remove_last_two_lines(file_path):
+    # Open the file and read its contents
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    
+    # Write back all but the last two lines
+    with open(file_path, 'w') as file:
+        file.writelines(lines[:-1])
+
+def process_folder(folder_path):
+    # Iterate over all files in the folder
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        
+        # Check if the current item is a file
+        if os.path.isfile(file_path):
+            remove_last_two_lines(file_path)
+            print(f"Processed file: {filename}")
+
+# Example usage
+folder_path = r'C:\Users\alex2\OneDrive\Desktop\valorant\VCTHack\backend\scripts\tournamentscraper\playerdata'
+process_folder(folder_path)
+
+
+# generate_player_based_narrative(data)
 
 
 # # Write to a text file

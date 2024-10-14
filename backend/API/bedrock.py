@@ -3,8 +3,7 @@ from botocore.client import BaseClient
 from botocore.exceptions import ClientError
 import uuid
 import json
-from tests.prompt_tests_suite import create_team_prompts, edit_team_prompts, valorant_news_stats_prompts, other_prompts
-from prompt_templates import *
+from API.prompt_templates import *
 
 
 # load_dotenv()
@@ -99,27 +98,56 @@ class VctClient():
         return response_text
 
     def create_team(self, input, uuid):
+        model_id = "anthropic.claude-instant-v1"
+        client = boto3.client("bedrock-runtime", region_name="us-east-1")
+
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                 agent_alias_id=self.agentAlias,
                                                 session_id= uuid,
                                                 prompt = input + CREATE_TEAM_TEMPLATE_STR)
-        return self.invoke_bedrock_agent(agent_id=self.agentId,
-                                                    agent_alias_id=self.agentAlias,
-                                                    session_id=uuid,
-                                                    prompt = PARSE_CREATE_TEAM_TEMPLATE_STR + raw)
-    def edit_team(self, input, uuid):
+        native_request = {
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 1024,
+            "temperature": 0,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [{"type": "text", "text": PARSE_CREATE_TEAM_TEMPLATE_STR + raw}],
+                }
+            ],
+        }
+        request = json.dumps(native_request)
+        response = client.invoke_model(modelId=model_id, body=request)
+        model_response = json.loads(response["body"].read())
+
+        # Extract and print the response text.
+        response_text = model_response["content"][0]["text"]
+        return response_text
+    def edit_team(self, input, current_team, uuid):
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                 agent_alias_id=self.agentAlias,
                                                 session_id= uuid,
-                                                prompt = input + EDIT_TEAM_TEMPLATE_STR)
+                                                prompt = self.describe_team(current_team) + input + EDIT_TEAM_TEMPLATE_STR)
         return self.invoke_bedrock_agent(agent_id=self.agentId,
                                                     agent_alias_id=self.agentAlias,
                                                     session_id=uuid,
                                                     prompt = PARSE_EDIT_TEAM_TEMPLATE_STR + raw)
- 
-
-if __name__ == "__main__":
-    bedrock_client = VctClient()
+    def search_kb(self, input, uuid):
+        return self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                    agent_alias_id=self.agentAlias,
+                                                    session_id=uuid,
+                                                    prompt = input + SEARCH_KNOWLEDGE_BASE_TEMPLATE_STR)
+    def describe_team(self, team):
+        num_empty_slots = 5 - len(team)
+        team_description = ', '.join(team)
+        
+        # Construct the output string based on empty slots
+        if num_empty_slots > 0:
+            return f"Given the team: {team_description} with {num_empty_slots} empty slot(s),"
+        else:
+            return f"Given the team: {team_description}, "
+# if __name__ == "__main__":
+#     bedrock_client = VctClient()
     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
     # agents = bedrock_client.list_agents()

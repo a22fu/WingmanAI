@@ -5,4 +5,3 @@ Precision played the following agents in Challengers League 2024 North America: 
 - In Funhaver x ROK: Run It Back, They played on team Dough Bros, finished 3rd–4th and placed in the top 25%. Precision was playing decently with a rating of 1.01, with a first contact per round of 0.13.
 Precision played the following agents in Funhaver x ROK: Run It Back:
   - played 140 rounds on fade, playing decently with a rating of 1.0 and first contact per round of 0.15. played 57 rounds on breach, playing decently, and defensively with a rating of 0.93 and first contact per round of 0.05. played 17 rounds on skye, struggling with a rating of 0.75 and first contact per round of 0.12. played 17 rounds on killjoy, performing well with a rating of 1.66 and first contact per round of 0.18.
-Precision had an overall performance of struggling with a rating of 0.86.

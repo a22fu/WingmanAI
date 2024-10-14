@@ -9,7 +9,7 @@ Your output must only contain the number of the category that you think best fit
 
 CREATE_TEAM_TEMPLATE_STR = """
 Try to make the best team possible prioritizing:
-1. Firstly, high ratings above 1.2 in tournaments
+1. Firstly, high ratings in tournaments
 2. Secondly, high placements with teams in tournaments
 3. Third, Having at least one of each agent role on the team, (duelist, controller, sentinel, initiator, flex(someone shown to play multiple roles)). 
 
@@ -30,15 +30,32 @@ A team should should try to include as many of the following roles as possible a
 
 Include a detailed explanation of each choice you made, and strengths and weaknesses of the team
 do not under any circumstances mention search results or sources in the output
-do not under any circumstances mention specific rating numbers or first contact per round, only say how well they are performing or their offensive vs defensive roles on the team.
+do not under any circumstances mention specific rating numbers or first contact per round in your output, only say how well they are performing or their offensive vs defensive roles on the team in your output
+Your output should look like this:
+player1: explanation for choosing player1
+player2: explanation for choosing player2
+player3: explanation for choosing player3
+player4: explanation for choosing player4
+player5: explanation for choosing player5
+Team strengths:
+1.
+2.
+3. etc
+Team weaknesses:
+1.
+2.
+3. etc
+
+Overall analysis: 
+
 """
 
 PARSE_CREATE_TEAM_TEMPLATE_STR = """
 You will receive an output from a Valorant team creator bot that creates a team composition. Your task is to parse the output and organize the information into distinct tags for further use in a program.
 
-If the output is for creating or editing a team composition, it will include a list of players, strengths, weaknesses, and possibly new players if the team is being edited. Separate the output into the following categories:
+If the output is for creating or editing a team composition, it will include a list of players, strengths, weaknesses. Separate the output into the following categories:
 
-[players]: This should include the final team of five players.
+[players]: A list of the names of the players selected, separated by commas
 [strengths]: A list or description of the team’s strengths.
 [weaknesses]: A list or description of the team’s weaknesses.
 [original_output]: The original output string from the Valorant team creator bot.
@@ -65,13 +82,9 @@ If any sections (such as weaknesses) are not relevant, you can omit those sectio
 """
 
 EDIT_TEAM_TEMPLATE_STR = """
-Try to make the best team possible prioritizing, while editing the original team.
-Consider:
-1. Firstly, high ratings above 1.2 in tournaments
-2. Secondly, high placements with teams in tournaments
-3. Third, Having at least one of each agent role on the team, (duelist, controller, sentinel, initiator, flex(someone shown to play multiple roles)). 
+.You must perform the edit or change on the team and return the new team you have created after doing so, making sure your team is 5 members
 
-you MUST return five unique players, make do if you can't find optimal choices
+Your output should include an analysis of the improvements and weaknesses compared to the old team, focusing on the parts of the teams that were actually changed.
 
 A team should should try to include as many of the following roles as possible and it should be considered a weakness if there isn't one
     "smokes": ["omen", "brimstone", "viper", "astra", "harbor", "clove"],
@@ -86,9 +99,8 @@ A team should should try to include as many of the following roles as possible a
     "duelist": ["jett", "neon", "phoenix", "raze", "reyna", "yoru", "iso"],
     "initiator": ["breach", "fade", "gekko", "kayo", "skye", "sova"]
 
-Include a detailed explanation of each choice you made, and improvements on the old team and potential weaknesses compared to the old team.
 do not under any circumstances mention search results or sources in the output
-do not under any circumstances mention specific rating numbers or first contact per round, only say how well they are performing or their offensive vs defensive roles on the team.
+do not under any circumstances mention specific rating numbers or first contact per round in your output, only say how well they are performing or their offensive vs defensive roles on the team.
 """
 
 PARSE_EDIT_TEAM_TEMPLATE_STR = """"
@@ -108,7 +120,7 @@ Player1, Player2, Player3, Player4, Player5
 [/players]
 
 [strengths]
-Strong agent synergy, High fragging power
+Stronger agent synergy, Higher fragging power
 [/strengths]
 
 [weaknesses]
@@ -120,4 +132,11 @@ Lack of experience on certain maps
 [/original_output]
 
 If any sections (such as weaknesses) are not relevant, you can omit those sections. The input is as follows: \n
+"""
+
+SEARCH_KNOWLEDGE_BASE_TEMPLATE_STR = """
+Please return your response surrounded by exit tags like below,
+[original_output]
+<Original bot output here>
+[/original_output]
 """

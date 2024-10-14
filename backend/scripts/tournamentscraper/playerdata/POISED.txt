@@ -5,4 +5,3 @@ POISED played the following agents in Champions Tour 2024 Americas: Ascension:
 - In Challengers League 2024 North America: Stage 2, They played on team TSM, finished 2nd and placed in the top 25%. POISED was struggling with a rating of 0.89, with a first contact per round of 0.12.
 POISED played the following agents in Challengers League 2024 North America: Stage 2:
   - played 193 rounds on skye, playing decently with a rating of 1.01 and first contact per round of 0.11. played 273 rounds on breach, struggling with a rating of 0.82 and first contact per round of 0.12. played 45 rounds on sova, struggling with a rating of 0.72 and first contact per round of 0.13. played 69 rounds on killjoy, playing decently with a rating of 0.91 and first contact per round of 0.14.
-POISED had an overall performance of struggling with a rating of 0.87.

@@ -5,4 +5,3 @@ HearthBeat played the following agents in Champions Tour 2024 EMEA: Ascension:
 - In Challengers League 2024 North: Polaris Split 2, They played on team SweetNsour, finished 2nd and placed in the top 25%. HearthBeat was playing decently with a rating of 0.98, with a first contact per round of 0.14.
 HearthBeat played the following agents in Challengers League 2024 North: Polaris Split 2:
   - played 374 rounds on omen, struggling with a rating of 0.89 and first contact per round of 0.16. played 99 rounds on viper, performing well, and defensively with a rating of 1.29 and first contact per round of 0.09. played 104 rounds on brimstone, playing decently with a rating of 1.0 and first contact per round of 0.15.
-HearthBeat had an overall performance of playing decently with a rating of 0.9.

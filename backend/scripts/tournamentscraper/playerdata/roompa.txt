@@ -26,4 +26,3 @@ roompa played the following agents in The Funhaver Invitational - Slugfest:
 - In Spike Drop: 003, They played on team Van Lyn, finished 1st and placed in the top 25%. roompa was performing well with a rating of 1.21, with a first contact per round of 0.12.
 roompa played the following agents in Spike Drop: 003:
   - played 139 rounds on sova, performing well with a rating of 1.34 and first contact per round of 0.11. played 40 rounds on skye, struggling with a rating of 0.58 and first contact per round of 0.15. played 17 rounds on gekko, performing well with a rating of 1.65 and first contact per round of 0.18.
-roompa had an overall performance of playing decently with a rating of 1.01.
