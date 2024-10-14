@@ -10,6 +10,7 @@
 body,html {
   margin: 0;
   padding: 0;
+  font-family: "Helvetica"
 }
 * {
   box-sizing: border-box;
@@ -45,14 +46,19 @@ body,html {
   display: flex;
   justify-content: center;
   gap: 10px; /* Optional: space between the containers */
-  background-color: #f2f2f2f2;
+  background-color: #1C1C1E;
 }
 
 .grid-wrap{
-  height:95vh;
-  background-color:#b38c8f;
+  height:93vh;
+  background-color:#2A2A2E;
   overflow-y: auto; /* This will enable vertical scrolling */
-  padding: 10px;
+  padding-right: 10px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.grid-wrap::-webkit-scrollbar {
+  display: none;
 }
 
 .chat-messages {
@@ -63,7 +69,7 @@ body,html {
   height: 100%;
   width: 100%;
   margin: auto;
-  background-color: #f2f2f2f2;
+  background-color: #1C1C1E;
 }
 
 .user-message, .bot-message {
@@ -78,12 +84,13 @@ body,html {
 }
 
 .user-message {
-  background-color: #DCF8C6;
-
+  background-color: #3C3C41;
+  color: #f2f2f2;
 }
 
 .bot-message {
-  background-color: #eeeeee;
+  background-color: #B2323A;
+  color: #f2f2f2;
   align-self: flex-start;
 }
 
@@ -91,7 +98,7 @@ body,html {
 
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: #1C1C1E;
   padding: 10px;
   border-radius: 40px;
   width: 100%;
@@ -103,7 +110,7 @@ body,html {
   align-items: center;
   justify-content: center;
   border: 1px solid black;
-  background: white;
+  background: #1C1C1E;
   position: relative;
   overflow: hidden;
   transition: width 0.3s ease, height 0.3s ease; 
@@ -135,12 +142,13 @@ body,html {
   padding: 10px;
   border-radius: 30px;
   outline: none;
-  background-color: white;
+  background-color: #3C3C41;
+  color: #f2f2f2;
   border: none
 }
 
 .send-button {
-  background-color: #fd4556; /* Button background color */
+  background-color: #FF4655; /* Button background color */
   border: none;
   color: white;
   width: 55px;
@@ -155,7 +163,7 @@ body,html {
 }
 
 .send-button:hover {
-  background-color: #45a049;
+  background-color: #E03E4B;
 }
 
 .feather-upload {
@@ -173,16 +181,30 @@ body,html {
   display: flex;
   padding: 10px;
   border-top: 1px solid #ddd;
-  background-color: #f1f1f1;
+  background-color: #1C1C1E;
 }
 
 .chat-input input {
   font-size: 20px;
   flex: 1;
-  padding: 10px;
+  padding: 15px;
 
 }
 
 .chat-input button:hover {
-  background-color: #45a049;
+  background-color: #E03E4B;
+}
+
+.player-search input{
+  background-color: #3C3C41;
+  border-radius: 10px;
+  color: #f2f2f2;
+}
+
+.player-search {
+  height: 7vh;
+}
+
+.search-window{
+  height: 100%;
 }
