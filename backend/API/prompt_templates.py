@@ -106,7 +106,7 @@ If any sections (such as weaknesses) are not relevant, you can omit those sectio
 """
 
 EDIT_TEAM_TEMPLATE_STR = """
-You must change the team and return the new team you have created after doing so, making sure your team is 5 members
+You must change the team and return the new team you have created after doing so, making sure your team is 5 UNIQUE members
 
 Your output should include what exact change was made, an analysis of the improvements and weaknesses compared to the old team, focusing on the parts of the teams that were actually changed.
 
@@ -153,8 +153,8 @@ If any sections (such as weaknesses) are not relevant, you can omit those sectio
 """
 
 OUTPUT_CLEANER_TEMPLATE_STR= """
-Fix the following output by removing mentions of any numbers, ratings, statistics, or search results directly in the output. 
-Replace them with qualitative reasons (e.g., "strong in attack", "consistent on defense") if necessary.
+Fix the following output by removing mentions of any numbers, ratings, statistics, or search results/sources directly in the output. 
+Your output should be the cleaned output with no other output.
 """
 
 TEAM_QUESTION_TEMPLATE_STR = """

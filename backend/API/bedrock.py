@@ -3,8 +3,8 @@ from botocore.client import BaseClient
 from botocore.exceptions import ClientError
 import uuid
 import json
-# from API.prompt_templates import *
-from prompt_templates import *
+from API.prompt_templates import *
+# from prompt_templates import *
 
 # load_dotenv()
 # agent_role = os.environ.get('AGENT_ROLE')
@@ -141,8 +141,8 @@ class VctClient():
         client = boto3.client("bedrock-runtime", region_name="us-east-1")
 
         filters = json.loads(self.get_filters(input))
-        player_list = bedrock_client.invoke_bedrock_agent(agent_id=bedrock_client.agentId,
-                                                    agent_alias_id=bedrock_client.agentAlias,
+        player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                    agent_alias_id=self.agentAlias,
                                                    session_id=uuid,
                                                    prompt = GATHER_TEAM_TEMPLATE_STR,
                                                    filters=filters)
@@ -154,8 +154,8 @@ class VctClient():
                             "value": player_array
                         }
                 }
-        response = bedrock_client.invoke_bedrock_agent(agent_id=bedrock_client.agentId,
-                                                        agent_alias_id=bedrock_client.agentAlias,
+        response = self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                        agent_alias_id=self.agentAlias,
                                                         session_id=uuid + "2",
                                                         prompt = CREATE_TEAM_TEMPLATE_STR + input,
                                                         filters=filtered_players)
@@ -197,7 +197,7 @@ class VctClient():
             "messages": [
                 {
                     "role": "user",
-                    "content": [{"type": "text", "text": PARSE_EDIT_TEAM_TEMPLATE_STR + raw}],
+                    "content": [{"type": "text", "text": self.describe_team(current_team) + PARSE_EDIT_TEAM_TEMPLATE_STR + raw}],
                 }
             ],
         }
@@ -271,16 +271,16 @@ class VctClient():
             return f"Given the team of Valorant professional players, {team_description}, with {num_empty_slots} empty slot(s),"
         else:
             return f"Given the team of Valorant professional players, {team_description}, "
-if __name__ == "__main__":
-    bedrock_client = VctClient()
-    # bedrock_runtime_client = bedrock_client.return_runtime_client()
+# if __name__ == "__main__":
+#     bedrock_client = VctClient()
+#     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
-    # agents = bedrock_client.list_agents()
-    # print(agents)
-    jing = str(uuid.uuid4())
-    request = "Build a team using only players from VCT International. Assign roles to each player and explain why this composition would be effective in a competitive match."
-    print(bedrock_client.create_team(request, jing))
-    # print(bedrock_client.create_team(request,jing ))
+#     # agents = bedrock_client.list_agents()
+#     # print(agents)
+#     jing = str(uuid.uuid4())
+#     request = "Build a team using only players from VCT International. Assign roles to each player and explain why this composition would be effective in a competitive match."
+#     print(bedrock_client.create_team(request, jing))
+#     # print(bedrock_client.create_team(request,jing ))
 
 
 
