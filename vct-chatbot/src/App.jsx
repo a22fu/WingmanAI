@@ -57,10 +57,10 @@ function App() {
 
   return (
     <div className="App">
-      <div class="top">
+      <div className="top">
         <img src="../resources/vct_logo.png" alt="val-logo" ></img>
-          VCT Esports Manager
-        </div>
+          <h>VCT Esports Manager</h>
+      </div>
       <div className="main">
         <DndContext
           sensors={sensors}

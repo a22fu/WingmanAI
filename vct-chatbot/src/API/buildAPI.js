@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { v4 as uuidv4 } from 'uuid';
-
+import playerdata from '../players/playerdata';
 const uuid = uuidv4();
 
 function parseValorantOutput(output) {
@@ -17,7 +17,6 @@ function parseValorantOutput(output) {
     const strengthsRegex = /\[strengths\](.*?)\[\/strengths\]/s;
     const weaknessesRegex = /\[weaknesses\](.*?)\[\/weaknesses\]/s;
     const originalOutputRegex = /\[original_output\](.*?)\[\/original_output\]/s;
-    const generalResponseRegex = /\[general_response\](.*?)\[\/general_response\]/s;
 
     // Extract players array
     const playersMatch = output.match(playersRegex);
@@ -41,20 +40,10 @@ function parseValorantOutput(output) {
     const originalOutputMatch = output.match(originalOutputRegex);
     if (originalOutputMatch) {
         originalOutput = originalOutputMatch[1].trim();
+    }else{
+        originalOutput = output
     }
 
-    // Extract general response string (if present)
-    const generalResponseMatch = output.match(generalResponseRegex);
-    if (generalResponseMatch) {
-        generalResponse = generalResponseMatch[1].trim();
-    }
-
-    // If a general response is present, return it directly
-    if (generalResponse) {
-        return {
-            generalResponse: generalResponse
-        };
-    }
 
     // Return the parsed data
     return {
@@ -84,8 +73,8 @@ async function buildTeam(user_input, items, setItems) {
         });
         console.log(response)
         const data = parseValorantOutput(response.data)
-
-        if (data["players"] != []){
+        console.log(data)
+        if (data["players"].length != 0){
             setItems(prevItems => {
                 const oldItems = [
                 ...prevItems.container1,
@@ -101,8 +90,7 @@ async function buildTeam(user_input, items, setItems) {
                 container3: [data["players"][2]],
                 container4: [data["players"][3]],
                 container5: [data["players"][4]], 
-            
-                container6: [...prevItems.container6.filter(item => !data["players"].includes(item)), ...oldItems],
+                container6: playerdata.filter(item => !data["players"].includes(item)),
                 };
             });
         }

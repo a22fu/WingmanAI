@@ -1,10 +1,32 @@
 @font-face {
-  font-family: Tungsten;
-  src: local(''), url(../public/resources/EM-Tungsten/Tungsten-Black.otf);
+  font-family: 'vlrFont'; 
+  src: url('../public/fonts/vlrfont.ttf') format('truetype'); 
 }
 
 .App {
   height: 100vh;
+}
+.top{
+  display: flex;
+  align-items: center;
+  background-color: #1C1C1E;
+  height: 7vh;
+  color: rgb(199, 48, 48);
+  font-size: 4.5vh;
+  font-weight: bold;
+  font-family: vlrFont;
+
+}
+
+.top h {
+  padding-top: 30px;
+}
+.top img{
+  max-width:96%;
+  max-height: 96%;
+  margin: 10px 30px;
+padding-top: 10px;
+
 }
 
 .main {
@@ -12,7 +34,7 @@
   justify-content: center;
   align-items: center;
   background-color: #f4f4f4;
-  height: 95vh;
+  height: 93vh;
 }
 
 body,html {
@@ -23,6 +45,8 @@ body,html {
 * {
   box-sizing: border-box;
 }
+
+
 
 .chat-window {
   font-size: 20px;
@@ -57,26 +81,11 @@ body,html {
   background-color: #2A2A2E;
 }
 
-.top{
-  display: flex;
-  background-color: #FF4655;
-  height: 5vh;
-  color: black;
-  font-size: 4.5vh;
-  font-weight: bold;
-  font-family: Tungsten;
 
-}
-.top img{
-  max-width:100%;
-  max-height: 100%;
-  margin: 5px 5px;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .grid-wrap{
-  height:88vh;
+  height:86vh;
   background-color: #1C1C1E;
   overflow-y: auto; /* This will enable vertical scrolling */
   padding-right: 10px;
