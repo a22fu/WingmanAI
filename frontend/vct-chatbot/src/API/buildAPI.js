@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+import { v4 as uuidv4 } from 'uuid';
+
+const uuid = uuidv4();
+
 function parseValorantOutput(output) {
     // Initialize variables
     let players = [];
@@ -70,10 +74,12 @@ async function buildTeam(user_input, items, setItems) {
         // Send a POST request to the Flask API
         const team = items.container1.concat(items.container2).concat(items.container3).concat(items.container4).concat(items.container5)
         console.log(team)
+        console.log(uuid)
         const response = await axios.post('http://localhost:5000/build_team', {
             parameters: {
-                user_input,
-                current_team: team
+                input: user_input,
+                current_team: team,
+                sessionId: uuid,
             }
         });
         console.log(response)

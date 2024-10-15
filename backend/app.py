@@ -10,10 +10,10 @@ CORS(app)
 @app.route('/build_team', methods=['POST'])
 def build_team():
     data = request.get_json()
-    input = data['parameters']['user_input']
+    input = data['parameters']['input']
     team = data['parameters']['current_team']
-    # sessionId = str(uuid.uuid4())
-    sessionId = "session1"
+    sessionId = data['parameters']['sessionId']
+    # sessionId = "session1"
     team_builder = VctClient()
 
 
@@ -33,13 +33,13 @@ def build_team():
         case "3":
             # Valorant Info
             result = team_builder.search_kb(input, sessionId)
-            return "I'm a teapot"
+            return result
         case "4":
             # Other
             return "I'm a teapot"
         # Failed
-        case _:
-            return "Something's wrong with the internet"
+        case 5:
+            return "Sorry I can't help you with that"
     # Extract parameters from the incoming data
 
 
