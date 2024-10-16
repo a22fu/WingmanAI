@@ -10,7 +10,8 @@ const ChatWindow = ({ messages, onSendMessage, items, hiddenIds }) => {
   const containerStyle = {
     width: "10vw",
     height: "10vw",
-    background: "#dadada",
+    background: "gray",
+    margin: "0vw 2vw 0vw 2vw",
 
     display: "flex",
     alignItems: "center",

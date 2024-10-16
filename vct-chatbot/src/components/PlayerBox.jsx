@@ -17,7 +17,7 @@ export default function PlayerBox(props) {
   const { setNodeRef } = useDroppable({
     id
   });
-  var map;
+  let map
   if (search != null){
     map = items.filter((item) => {
       return search.toLowerCase() === '' ? item : item.toLowerCase().includes(search.toLowerCase());
@@ -42,8 +42,7 @@ export default function PlayerBox(props) {
       hiddenIds = {hiddenIds}
       >
       <div ref={setNodeRef} style={containerStyle}>
-      
-      {map}
+      {map.length == 0 ? <img src="../resources/blank_player.png" alt="player" width="80%"/> : map}
       </div>
     </SortableContext>
   );
