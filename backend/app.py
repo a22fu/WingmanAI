@@ -36,13 +36,14 @@ def build_team():
             result = team_builder.search_kb(input, sessionId)
             return result
         case "4":
+            result = team_builder.create_query(input, sessionId)
+            return result
+        case "5":
             result = team_builder.analyze_team(input, team, sessionId)
             return result
         # Failed
-        case 5:
+        case "6":
             return "Sorry I can't help you with that"
-    # Extract parameters from the incoming data
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

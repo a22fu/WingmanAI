@@ -3,6 +3,8 @@ from botocore.client import BaseClient
 from botocore.exceptions import ClientError
 import uuid
 import json
+import awswrangler as wr  
+
 from API.prompt_templates import *
 # from prompt_templates import *
 
@@ -11,11 +13,14 @@ from API.prompt_templates import *
 
 
 class VctClient():
+
     def __init__(self,
                  region_name="us-east-1"):
         self.region_name = region_name
         self.agentId = "VMPZXQYLQ0"
         self.agentAlias = "T076UHLG01"
+        self.model_id = "anthropic.claude-instant-v1"
+        self.client = boto3.client("bedrock-runtime", region_name="us-east-1")
 
     def return_runtime_client(self, run_time=True) -> BaseClient:
         if run_time:
@@ -90,10 +95,8 @@ class VctClient():
         return completion
     
     def categorize_input(self, input):
-        client = boto3.client("bedrock-runtime", region_name="us-east-1")
 
         # Set the model ID, e.g., Claude 3 Haiku.
-        model_id = "anthropic.claude-instant-v1"
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 100,
@@ -106,17 +109,15 @@ class VctClient():
             ],
         }
         request = json.dumps(native_request)
-        response = client.invoke_model(modelId=model_id, body=request)
+        response = self.client.invoke_model(modelId=self.model_id, body=request)
         model_response = json.loads(response["body"].read())
 
         # Extract and print the response text.
         response_text = model_response["content"][0]["text"]
         return response_text
     def get_filters(self, input):
-        client = boto3.client("bedrock-runtime", region_name="us-east-1")
 
         # Set the model ID, e.g., Claude 3 Haiku.
-        model_id = "anthropic.claude-instant-v1"
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 100,
@@ -129,7 +130,7 @@ class VctClient():
             ],
         }
         request = json.dumps(native_request)
-        response = client.invoke_model(modelId=model_id, body=request)
+        response = self.client.invoke_model(modelId=self.model_id, body=request)
         model_response = json.loads(response["body"].read())
 
         # Extract and print the response text.
@@ -137,9 +138,6 @@ class VctClient():
         return response_text
 
     def create_team(self, input, uuid):
-        model_id = "anthropic.claude-instant-v1"
-        client = boto3.client("bedrock-runtime", region_name="us-east-1")
-
         filters = json.loads(self.get_filters(input))
         player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                     agent_alias_id=self.agentAlias,
@@ -174,7 +172,7 @@ class VctClient():
             ],
         }
         request = json.dumps(native_request)
-        adjusted_response = client.invoke_model(modelId=model_id, body=request)
+        adjusted_response = self.client.invoke_model(modelId=self.model_id, body=request)
         model_response = json.loads(adjusted_response["body"].read())
 
         # Extract and print the response text.
@@ -182,8 +180,6 @@ class VctClient():
         return response_text
     
     def edit_team(self, input, current_team, uuid):
-        model_id = "anthropic.claude-instant-v1"
-        client = boto3.client("bedrock-runtime", region_name="us-east-1")
         print(self.describe_team(current_team) + input + EDIT_TEAM_TEMPLATE_STR)
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                 agent_alias_id=self.agentAlias,
@@ -202,15 +198,14 @@ class VctClient():
             ],
         }
         request = json.dumps(native_request)
-        adjusted_response = client.invoke_model(modelId=model_id, body=request)
+        adjusted_response = self.client.invoke_model(modelId=self.model_id, body=request)
         model_response = json.loads(adjusted_response["body"].read())
 
         # Extract and print the response text.
         response_text = model_response["content"][0]["text"]
         return response_text
     def search_kb(self, input, uuid):
-        model_id = "anthropic.claude-instant-v1"
-        client = boto3.client("bedrock-runtime", region_name="us-east-1")
+
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                     agent_alias_id=self.agentAlias,
                                                     session_id=uuid,
@@ -228,15 +223,14 @@ class VctClient():
             ],
         }
         request = json.dumps(native_request)
-        adjusted_response = client.invoke_model(modelId=model_id, body=request)
+        adjusted_response = self.client.invoke_model(modelId=self.model_id, body=request)
         model_response = json.loads(adjusted_response["body"].read())
 
         # Extract and print the response text.
         response_text = model_response["content"][0]["text"]
         return response_text
+    
     def analyze_team(self, input, current_team, uuid):
-        model_id = "anthropic.claude-instant-v1"
-        client = boto3.client("bedrock-runtime", region_name="us-east-1")
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                     agent_alias_id=self.agentAlias,
                                                     session_id=uuid,
@@ -254,7 +248,7 @@ class VctClient():
             ],
         }
         request = json.dumps(native_request)
-        adjusted_response = client.invoke_model(modelId=model_id, body=request)
+        adjusted_response = self.client.invoke_model(modelId=self.model_id, body=request)
         model_response = json.loads(adjusted_response["body"].read())
 
         # Extract and print the response text.
@@ -271,13 +265,41 @@ class VctClient():
             return f"Given the team of Valorant professional players, {team_description}, with {num_empty_slots} empty slot(s),"
         else:
             return f"Given the team of Valorant professional players, {team_description}, "
-# if __name__ == "__main__":
-#     bedrock_client = VctClient()
+    def create_query(self, input, uuid):
+        query = self.invoke_bedrock_agent(agent_id=self.agentId,
+                                            agent_alias_id=self.agentAlias,
+                                            session_id=uuid,
+                                            prompt = SEARCH_STATS_TEMPLATE_STR + input)
+        print(query)
+        df = wr.athena.read_sql_query(sql=query, database="default")
+        native_request = {
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 2048,
+            "temperature": 0.1,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [{"type": "text", "text": input + SQL_QUERY_PARSER_TEMPLATE_STR +  str(df)}],
+                }
+            ],
+        }
+        request = json.dumps(native_request)
+        adjusted_response = self.client.invoke_model(modelId=self.model_id, body=request)
+        model_response = json.loads(adjusted_response["body"].read())
+
+        # Extract and print the response text.
+        response_text = model_response["content"][0]["text"]
+        
+        return response_text
+if __name__ == "__main__":
+    jing = str(uuid.uuid4())
+
+    bedrock_client = VctClient()
+    print(bedrock_client.create_query("how many rounds has tenz played", jing))
 #     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()
 #     # print(agents)
-#     jing = str(uuid.uuid4())
 #     request = "Build a team using only players from VCT International. Assign roles to each player and explain why this composition would be effective in a competitive match."
 #     print(bedrock_client.create_team(request, jing))
 #     # print(bedrock_client.create_team(request,jing ))

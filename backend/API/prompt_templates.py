@@ -2,9 +2,10 @@ CATEGORIZE_TEMPLATE_STR = """
 Categorize the above input into one of 4 categories:
 1. A request to create a Valorant professional team, potentially given some parameters and requests
 2. A request to edit, change or improve in some way a given Valorant professional team, including add X player, take out a smokes, make the team more aggressive
-3. A general question related to Valorant esports or stats
-4. A question referring to a team - such as what are the strengths of this team, or who would fit well on this team.
-5. An unrelated input that doesn't fit any category
+3. A general question related to Valorant esports not related to a specific statistic of a player such as who won X tournament
+4. A question asking a specific statistic for a player, such as what is the kd ratio of tenz
+5. A question referring to a team - such as what are the strengths of this team, or who would fit well on this team.
+6. An unrelated input that doesn't fit any category
 Your output must only contain the number of the category that you think best fits the input and nothing else.
 """
 
@@ -157,6 +158,34 @@ Fix the following output by removing mentions of any numbers, ratings, statistic
 Your output should be the cleaned output with no other output.
 """
 
-TEAM_QUESTION_TEMPLATE_STR = """
+SEARCH_STATS_TEMPLATE_STR = """
+you are a SQL query creator designed to create an SQL query to search for a user request. You are given the following valorant player stat table:
+CREATE EXTERNAL TABLE IF NOT EXISTS `default`.`vlrdataf` (
+  `player` string,
+  `org` string,
+  `agents` array < string >,
+  `rounds_played` float,
+  `rating` float,
+  `average_combat_score` float,
+  `kill_deaths` float,
+  `kill_assists_survived_traded` float,
+  `average_damage_per_round` float,
+  `kills_per_round` float,
+  `assists_per_round` float,
+  `first_kills_per_round` float,
+  `first_deaths_per_round` float,
+  `headshot_percentage` float,
+  `clutch_success_percentage` float,
+  `region` string,
+  `league` string,
+  `zscore` float
+)
 
+YOU MUST USE DOUBLE QUOTES SURROUNDING IDENTIFIERS, do not cast any variables
+Your output should only contain a syntactically correct SQL query to get the result of the following input:
+"""
+
+SQL_QUERY_PARSER_TEMPLATE_STR = """
+To answer this question, you are going to be given a set of SQL query results, you just need to read them and return them in a userfriendly format, but dont mention SQL query results, just saying according to my information.
+The query results are as follows
 """
