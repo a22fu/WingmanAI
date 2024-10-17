@@ -139,11 +139,13 @@ class VctClient():
 
     def create_team(self, input, uuid):
         filters = json.loads(self.get_filters(input))
+        print(filters)
         player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                     agent_alias_id=self.agentAlias,
                                                    session_id=uuid,
                                                    prompt = GATHER_TEAM_TEMPLATE_STR,
                                                    filters=filters)
+        print(player_list)
         player_array = player_list.split(', ')
         player_array.append('meta')
         filtered_players = {
@@ -204,37 +206,39 @@ class VctClient():
         # Extract and print the response text.
         response_text = model_response["content"][0]["text"]
         return response_text
-    def search_kb(self, input, uuid):
+    # def search_kb(self, input, uuid):
 
-        raw = self.invoke_bedrock_agent(agent_id=self.agentId,
-                                                    agent_alias_id=self.agentAlias,
-                                                    session_id=uuid,
-                                                    prompt = input)
+    #     raw = self.invoke_bedrock_agent(agent_id=self.agentId,
+    #                                                 agent_alias_id=self.agentAlias,
+    #                                                 session_id=uuid,
+    #                                                 prompt = input)
 
-        native_request = {
-            "anthropic_version": "bedrock-2023-05-31",
-            "max_tokens": 2048,
-            "temperature": 0.1,
-            "messages": [
-                {
-                    "role": "user",
-                    "content": [{"type": "text", "text": OUTPUT_CLEANER_TEMPLATE_STR + raw}],
-                }
-            ],
-        }
-        request = json.dumps(native_request)
-        adjusted_response = self.client.invoke_model(modelId=self.model_id, body=request)
-        model_response = json.loads(adjusted_response["body"].read())
+    #     native_request = {
+    #         "anthropic_version": "bedrock-2023-05-31",
+    #         "max_tokens": 2048,
+    #         "temperature": 0.1,
+    #         "messages": [
+    #             {
+    #                 "role": "user",
+    #                 "content": [{"type": "text", "text": OUTPUT_CLEANER_TEMPLATE_STR + raw}],
+    #             }
+    #         ],
+    #     }
+    #     request = json.dumps(native_request)
+    #     adjusted_response = self.client.invoke_model(modelId=self.model_id, body=request)
+    #     model_response = json.loads(adjusted_response["body"].read())
 
-        # Extract and print the response text.
-        response_text = model_response["content"][0]["text"]
-        return response_text
+    #     # Extract and print the response text.
+    #     response_text = model_response["content"][0]["text"]
+    #     return response_text
     
     def analyze_team(self, input, current_team, uuid):
+        
+
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                     agent_alias_id=self.agentAlias,
                                                     session_id=uuid,
-                                                    prompt = self.describe_team(current_team) + input)
+                                                    prompt =KB_SEARCH_TEMPLATE_STR +  self.describe_team(current_team) + input)
 
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
@@ -259,19 +263,35 @@ class VctClient():
         num_empty_slots = 5 - len(team)
     
         team_description = ', '.join(team)
-        
+        if num_empty_slots == 5:
+            return ""
         # Construct the output string based on empty slots
         if num_empty_slots > 0:
             return f"Given the team of Valorant professional players, {team_description}, with {num_empty_slots} empty slot(s),"
         else:
             return f"Given the team of Valorant professional players, {team_description}, "
     def create_query(self, input, uuid):
-        query = self.invoke_bedrock_agent(agent_id=self.agentId,
-                                            agent_alias_id=self.agentAlias,
-                                            session_id=uuid,
-                                            prompt = SEARCH_STATS_TEMPLATE_STR + input)
+        native_request = {
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 2048,
+            "temperature": 0.1,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [{"type": "text", "text": SEARCH_STATS_TEMPLATE_STR + input}],
+                }
+            ],
+        }
+        request = json.dumps(native_request)
+        adjusted_response = self.client.invoke_model(modelId=self.model_id, body=request)
+        model_response = json.loads(adjusted_response["body"].read())
+
+        # Extract and print the response text.
+        query = model_response["content"][0]["text"]
         print(query)
         df = wr.athena.read_sql_query(sql=query, database="default")
+        
+        
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 2048,
@@ -291,11 +311,11 @@ class VctClient():
         response_text = model_response["content"][0]["text"]
         
         return response_text
-if __name__ == "__main__":
-    jing = str(uuid.uuid4())
+# if __name__ == "__main__":
+#     jing = str(uuid.uuid4())
 
-    bedrock_client = VctClient()
-    print(bedrock_client.create_query("how many rounds has tenz played", jing))
+#     bedrock_client = VctClient()
+#     print(bedrock_client.analyze_team("who is on edg", [], jing))
 #     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()

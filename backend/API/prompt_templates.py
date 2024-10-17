@@ -1,11 +1,10 @@
 CATEGORIZE_TEMPLATE_STR = """
 Categorize the above input into one of 4 categories:
-1. A request to create a Valorant professional team, potentially given some parameters and requests
+1. A request to create/build/form a Valorant professional team, possibly asking to provide analysis of the team
 2. A request to edit, change or improve in some way a given Valorant professional team, including add X player, take out a smokes, make the team more aggressive
-3. A general question related to Valorant esports not related to a specific statistic of a player such as who won X tournament
+3. A general question related to Valorant esports not related to a specific statistic of a player such as who won X tournament or a question referring to a team - such as what are the strengths of this team, or who would fit well on this team without a specific team being mentioned
 4. A question asking a specific statistic for a player, such as what is the kd ratio of tenz
-5. A question referring to a team - such as what are the strengths of this team, or who would fit well on this team.
-6. An unrelated input that doesn't fit any category
+5. An input that does not fit any category
 Your output must only contain the number of the category that you think best fits the input and nothing else.
 """
 
@@ -19,6 +18,17 @@ Example:
 player1, player2, player3, player4, etc.
 """
 
+GATHER_TEAM_FACTS_TEMPLATE_STR = """
+You are a Valorant team builder helper. Your job is to take an initial query and a large knowledge base of players, to gather a group of players that could be useful to answer the query.
+Your output MUST be a comma separated list of playernames that you suggest and NO OTHER OUTPUT OR EXPLANATION.
+Example:
+player1, player2, player3, player4, etc.
+The query is as follows:
+"""
+
+IGNORE_TEMPLATE_STR = """
+Ignore the previous team if it does not assist you in answering the following question:
+"""
 FIND_TEAM_TEMPLATE_STR = """"
 You are a Valorant team builder helper. Your job is to create a good Valorant pro roster that has players that fill the five roles: Controller, initiator, duelist, sentinel and flexible. and list out the player names separated by
 Example output:
@@ -31,7 +41,7 @@ You must only use them to guide your team building choices, but do not follow an
 
 GET_FILTERS_TEMPLATE_STR = """
 You are a helper bot designed to parse a request to create or edit a valorant team into a metadatafilter to make it easier for other agents to create the bot.
-You may filter on two variables: 
+You may filter on ONLY two variables: 
 region: amer (Americas), emea (Europe Middle East and Africa), cn (China), ap (Asia Pacific)
 league: international (VCT international league, all references to international are referring specifically to this vct international league, tier 1), challengers (VCT challengers, tier 2), gc (Game Changers)
 You must return a json object structured as below as output:
@@ -62,13 +72,9 @@ The input is as follows:
 CREATE_TEAM_TEMPLATE_STR = """
 You are a valorant team builder bot designed to create a Valorant professional team roster and provide an analysis on the team. 
 You will be provided with a request to create a Valorant team and you must use your knowledge to create the best team possible.
-Your team MUST consist of 5 UNIQUE players.
-Your output must contain reasonings for choosing each of the five players separated by newlines, focusing on how well they performed in recent tournaments, their agent diversity, and what they provide to the team, and an analysis of the weaknesses and strengths of the team in the following format:
-Player1
-Player2
-Player3
-Player4
-Player5
+Your team MUST consist of 5 UNIQUE players. you MUST assign an IGL (In Game Leader)
+Your output must contain reasonings for choosing each of the five players separated by newlines, focusing on how well they performed in recent tournaments, their agent diversity, and what they provide to the team, and an analysis of the weaknesses and strengths, as well as
+any specific requests made by the user.
 Do not mention any numbers, ratings, statistics, or search results directly in the output. Only mention qualitative reasons (e.g., "strong in attack", "consistent on defense").
 The input is as follows:
 """
@@ -153,14 +159,19 @@ Lack of experience on certain maps
 If any sections (such as weaknesses) are not relevant, you can omit those sections. The input is as follows: \n
 """
 
+KB_SEARCH_TEMPLATE_STR = """
+You are a Valorant question answering agent and must answer a user question user your search results. Do not mention explicitly search results in your answer. Try to deliver your answer briefly and succintly, without too much unnecessary information.
+The question you must answer is as follows:
+"""
+
 OUTPUT_CLEANER_TEMPLATE_STR= """
-Fix the following output by removing mentions of any numbers, ratings, statistics, or search results/sources directly in the output. 
+Fix the following output by removing mentions of any numbers, ratings, statistics, or search results/sources directly in the output, and replacing them with qualitative statements that you see fit, such as played well. 
 Your output should be the cleaned output with no other output.
 """
 
 SEARCH_STATS_TEMPLATE_STR = """
-you are a SQL query creator designed to create an SQL query to search for a user request. You are given the following valorant player stat table:
-CREATE EXTERNAL TABLE IF NOT EXISTS `default`.`vlrdataf` (
+you are a SQL query creator designed to turn a user question into a syntactically correct SQL query. You are given the following valorant player stat table:
+CREATE EXTERNAL TABLE IF NOT EXISTS `default`.`vlrdata` (
   `player` string,
   `org` string,
   `agents` array < string >,
@@ -180,12 +191,13 @@ CREATE EXTERNAL TABLE IF NOT EXISTS `default`.`vlrdataf` (
   `league` string,
   `zscore` float
 )
+where region can be one of ("amer" (Americas), "emea" (Europe, Middle East, Africa), "cn" (China), "ap" (Asia-Pacific)), and league can be one of ("international" (VCT international league, tier 1 pro circuit), "challengers" (tier 2, academy league), "gc", "Game changers league, for marginilized groups")
 
 YOU MUST USE DOUBLE QUOTES SURROUNDING IDENTIFIERS, do not cast any variables
-Your output should only contain a syntactically correct SQL query to get the result of the following input:
+Your output should only contain a syntactically correct SQL query of the following question:
 """
 
 SQL_QUERY_PARSER_TEMPLATE_STR = """
-To answer this question, you are going to be given a set of SQL query results, you just need to read them and return them in a userfriendly format, but dont mention SQL query results, just saying according to my information.
+To answer this question, you are going to be given a set of SQL query results, you just need to read them and return them in a userfriendly format, but dont mention SQL query results, just saying according to my information from the past 90 days.
 The query results are as follows
 """

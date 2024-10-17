@@ -12,8 +12,8 @@ def build_team():
     data = request.get_json()
     input = data['parameters']['input']
     team = data['parameters']['current_team']
-    sessionId = str(uuid.uuid4())
-    # sessionId = data['parameters']['sessionId']
+    # sessionId = str(uuid.uuid4())
+    sessionId = data['parameters']['sessionId']
     # sessionId = "session1"
     team_builder = VctClient()
 
@@ -33,17 +33,15 @@ def build_team():
             return result
         case "3":
             # Valorant Info
-            result = team_builder.search_kb(input, sessionId)
+            result = team_builder.analyze_team(input, team, sessionId)
             return result
         case "4":
             result = team_builder.create_query(input, sessionId)
             return result
-        case "5":
-            result = team_builder.analyze_team(input, team, sessionId)
-            return result
         # Failed
-        case "6":
+        case "5":
             return "Sorry I can't help you with that"
+    return "Sorry I can't help you with that"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

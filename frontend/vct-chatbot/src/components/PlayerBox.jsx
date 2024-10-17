@@ -17,6 +17,8 @@ export default function PlayerBox(props) {
   const { setNodeRef } = useDroppable({
     id
   });
+  items.sort()
+
   let map
   if (search != null){
     map = items.filter((item) => {
