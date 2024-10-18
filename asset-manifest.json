@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/VCTHack/static/css/main.25d23235.css",
-    "main.js": "/VCTHack/static/js/main.90124a56.js",
+    "main.js": "/VCTHack/static/js/main.f2f80868.js",
     "static/js/453.04d5208f.chunk.js": "/VCTHack/static/js/453.04d5208f.chunk.js",
     "static/media/vlrfont.ttf": "/VCTHack/static/media/vlrfont.86ec8370af32018a2391.ttf",
     "static/media/vct_logo.png": "/VCTHack/static/media/vct_logo.debb1e1b69ee47650ab5.png",
     "static/media/send-svgrepo-com.svg": "/VCTHack/static/media/send-svgrepo-com.3016ec305c09b705ae7312356fee5276.svg",
     "index.html": "/VCTHack/index.html",
     "main.25d23235.css.map": "/VCTHack/static/css/main.25d23235.css.map",
-    "main.90124a56.js.map": "/VCTHack/static/js/main.90124a56.js.map",
+    "main.f2f80868.js.map": "/VCTHack/static/js/main.f2f80868.js.map",
     "453.04d5208f.chunk.js.map": "/VCTHack/static/js/453.04d5208f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.25d23235.css",
-    "static/js/main.90124a56.js"
+    "static/js/main.f2f80868.js"
   ]
 }
