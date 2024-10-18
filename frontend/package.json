@@ -1,6 +1,6 @@
 {
   "name": "vct-chatbot",
-  "homepage": "https://a22fu.github.io/VCTHack",
+  "homepage": "https://vcthack.onrender.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -64,7 +64,7 @@ async function buildTeam(user_input, items, setItems) {
         const team = items.container1.concat(items.container2).concat(items.container3).concat(items.container4).concat(items.container5)
         console.log(team)
         console.log(uuid)
-        const response = await axios.post('https://107.22.135.168:5000/build_team', {
+        const response = await axios.post('https://107.22.135.168/build_team', {
             parameters: {
                 input: user_input,
                 current_team: team,
