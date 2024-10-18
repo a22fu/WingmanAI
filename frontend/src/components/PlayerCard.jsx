@@ -2,7 +2,7 @@ import * as React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from '@dnd-kit/utilities';
 import data from '../players/imgdict.json'
-
+import playerimg from "../resources/blank_player.png"
 export function Item(props) {
   const { id, isSmall } = props;
 
@@ -12,7 +12,7 @@ export function Item(props) {
   };
   var image = data[id]
   if (!image){
-    image = "../resources/blank_player.png"
+    image = playerimg
   }
   return (
     <div style={style} className="player-card">

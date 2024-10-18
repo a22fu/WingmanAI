@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ChatWindow from "./components/ChatWindow.jsx";
 import buildTeam from "./API/buildAPI.js";
 import PlayerCard from "./components/PlayerCard.jsx";
+import vctlogo from "./resources/vct_logo.png"
 import {
   DragOverlay,
   DndContext,
@@ -58,7 +59,7 @@ function App() {
   return (
     <div className="App">
       <div className="top">
-        <img src="../resources/vct_logo.png" alt="val-logo" ></img>
+        <img src= {vctlogo} alt="val-logo" ></img>
           <h>VCT Esports Manager</h>
       </div>
       <div className="main">

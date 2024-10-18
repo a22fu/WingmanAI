@@ -1,6 +1,7 @@
 // components/ChatInput.js
 import React, { useState } from 'react';
-
+import vallogo from "../resources/vallogo.png" 
+import sendimg from "../resources/send-svgrepo-com.svg"
 const ChatInput = ({ onSendMessage }) => {
   const [inputValue, setInputValue] = useState('');
 
@@ -19,7 +20,7 @@ const ChatInput = ({ onSendMessage }) => {
     <div className="chat-input">
       <div className="input-container">
         <div className="valorant-icon">
-          <img src="../resources/vallogo.png" alt="val-logo" ></img>
+          <img src= {vallogo}alt="val-logo" ></img>
         </div>
         <input
           type="text"
@@ -30,7 +31,7 @@ const ChatInput = ({ onSendMessage }) => {
           className="message-input"
         />
         <button onClick={handleSend} className="send-button">
-          <img width="37px" height="37px" src="../resources/send-svgrepo-com.svg" alt="Enter"/>
+          <img width="37px" height="37px" src={sendimg} alt="Enter"/>
         </button>
         </div>
 
