@@ -44,7 +44,7 @@ export default function PlayerBox(props) {
       hiddenIds = {hiddenIds}
       >
       <div ref={setNodeRef} style={containerStyle}>
-      {map.length == 0 ? <img src="../resources/blank_player.png" alt="player" width="80%"/> : map}
+      {map.length === 0 && id !== 'container6'? <img src="../resources/blank_player.png" alt="player" width="80%"/> : map}
       </div>
     </SortableContext>
   );
