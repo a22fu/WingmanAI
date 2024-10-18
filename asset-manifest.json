@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/VCTHack/static/css/main.25d23235.css",
-    "main.js": "/VCTHack/static/js/main.9bf9e41f.js",
+    "main.js": "/VCTHack/static/js/main.7e9411e6.js",
     "static/js/453.04d5208f.chunk.js": "/VCTHack/static/js/453.04d5208f.chunk.js",
     "static/media/vlrfont.ttf": "/VCTHack/static/media/vlrfont.86ec8370af32018a2391.ttf",
     "index.html": "/VCTHack/index.html",
     "main.25d23235.css.map": "/VCTHack/static/css/main.25d23235.css.map",
-    "main.9bf9e41f.js.map": "/VCTHack/static/js/main.9bf9e41f.js.map",
+    "main.7e9411e6.js.map": "/VCTHack/static/js/main.7e9411e6.js.map",
     "453.04d5208f.chunk.js.map": "/VCTHack/static/js/453.04d5208f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.25d23235.css",
-    "static/js/main.9bf9e41f.js"
+    "static/js/main.7e9411e6.js"
   ]
 }
