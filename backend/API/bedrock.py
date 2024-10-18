@@ -39,27 +39,20 @@ class VctClient():
                              agent_alias_id,
                              session_id,
                              prompt=None, 
-                             filters = {
-                                    "andAll": [
-                                        {
-                                            "in": {
-                                                "key": "region",
-                                                "value": ["amer", "emea","cn","ap"]
-                                            }
-                                        },
-                                        {
-                                            "in": {
-                                                "key": "league",
-                                                "value": ["international", "challengers", "gc"]
-                                            }
-                                        }
-                                    ]
-                                }):
+                             filters = None):
 
         completion = ""
         traces =[]
         try:
             bedrock_client = self.return_runtime_client(run_time=True)
+            retrievalconfig = {
+                                'vectorSearchConfiguration': {
+
+                                    'numberOfResults': 40,
+                                }
+                            }
+            if filters:
+                retrievalconfig["vectorSearchConfiguration"]["filter"] = filters
             response = bedrock_client.invoke_agent(
                 agentId=agent_id,
                 agentAliasId=agent_alias_id,
@@ -69,12 +62,7 @@ class VctClient():
                     'knowledgeBaseConfigurations': [
                         {
                             'knowledgeBaseId': 'MMUTW03GYI',
-                            'retrievalConfiguration': {
-                                'vectorSearchConfiguration': {
-                                    "filter": filters,
-                                    'numberOfResults': 40,
-                                }
-                            }
+                            'retrievalConfiguration': retrievalconfig
                         },
                     ]
                 }
@@ -315,7 +303,7 @@ class VctClient():
 #     jing = str(uuid.uuid4())
 
 #     bedrock_client = VctClient()
-#     print(bedrock_client.analyze_team("who is on edg", [], jing))
+#     print(bedrock_client.analyze_team("what players are on edg", [], jing))
 #     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()

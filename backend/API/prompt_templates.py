@@ -160,13 +160,13 @@ If any sections (such as weaknesses) are not relevant, you can omit those sectio
 """
 
 KB_SEARCH_TEMPLATE_STR = """
-You are a Valorant question answering agent and must answer a user question user your search results. Do not mention explicitly search results in your answer. Try to deliver your answer briefly and succintly, without too much unnecessary information.
+You are a Valorant question answering agent and must answer a user question user your search results. Do not mention explicitly search results in your answer. Try to deliver your answer briefly, but specificly, without too much unnecessary information.
 The question you must answer is as follows:
 """
 
 OUTPUT_CLEANER_TEMPLATE_STR= """
-Fix the following output by removing mentions of any numbers, ratings, statistics, or search results/sources directly in the output, and replacing them with qualitative statements that you see fit, such as played well. 
-Your output should be the cleaned output with no other output.
+Fix the following output by removing mentions of any numbers, ratings or statistics, directly in the output, and replacing them with qualitative statements that you see fit, such as played well. 
+Your output should be the cleaned output with no other output, do not mention that you cleaned the output. 
 """
 
 SEARCH_STATS_TEMPLATE_STR = """
