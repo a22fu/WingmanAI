@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { v4 as uuidv4 } from 'uuid';
 import playerdata from '../players/playerdata';
-const uuid = uuidv4();
+var uuid = uuidv4();
 
 function parseValorantOutput(output) {
     // Initialize variables
@@ -10,7 +10,6 @@ function parseValorantOutput(output) {
     let strengths = '';
     let weaknesses = '';
     let originalOutput = '';
-    let generalResponse = '';
 
     // Regular expressions to capture each section
     const playersRegex = /\[players\](.*?)\[\/players\]/s;
@@ -22,6 +21,7 @@ function parseValorantOutput(output) {
     const playersMatch = output.match(playersRegex);
     if (playersMatch) {
         players = playersMatch[1].trim().split(',').map(player => player.trim());
+        uuid = uuidv4();
     }
 
     // Extract strengths string
