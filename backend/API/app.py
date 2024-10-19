@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from API.bedrock import VctClient  # Import your class
+from bedrock import VctClient  # Import your class
 from flask_cors import CORS
 
 app = Flask(__name__)
