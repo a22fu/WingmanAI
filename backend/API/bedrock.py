@@ -312,7 +312,7 @@ if __name__ == "__main__":
     jing = str(uuid.uuid4())
 
     bedrock_client = VctClient()
-    print(bedrock_client.analyze_team("what players are on edg", [], jing))
+    print(bedrock_client.create_query("who has the lowest headshot percentage", jing))
     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()

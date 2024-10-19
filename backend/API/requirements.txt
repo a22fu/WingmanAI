@@ -4,4 +4,3 @@ uuid
 awswrangler
 flask
 flask_cors
-os
