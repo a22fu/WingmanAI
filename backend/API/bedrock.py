@@ -267,12 +267,14 @@ class VctClient():
             return f"Given the team of Valorant professional players, {team_description}, with {num_empty_slots} empty slot(s),"
         else:
             return f"Given the team of Valorant professional players, {team_description}, "
-    def create_query(self, input, uuid):
+    def create_query(self, input):
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
-            "max_tokens": 2048,
+            "max_tokens": 150,
             "temperature": 0.1,
+            
             "messages": [
+                {"role": "assistant", "content": [{"type": "text", "text":  "Tenz won the valorant champions"}]},
                 {
                     "role": "user",
                     "content": [{"type": "text", "text": SEARCH_STATS_TEMPLATE_STR + input}],
@@ -308,11 +310,11 @@ class VctClient():
         response_text = model_response["content"][0]["text"]
         
         return response_text
-if __name__ == "__main__":
-    jing = str(uuid.uuid4())
+# if __name__ == "__main__":
+#     jing = str(uuid.uuid4())
 
-    bedrock_client = VctClient()
-    print(bedrock_client.create_team("create a vct international team", jing))
+#     bedrock_client = VctClient()
+#     print(bedrock_client.create_query("what was his headshot", jing))
     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()
