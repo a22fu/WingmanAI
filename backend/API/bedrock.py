@@ -57,7 +57,7 @@ class VctClient():
             retrievalconfig = {
                                 'vectorSearchConfiguration': {
 
-                                    'numberOfResults': 40,
+                                    'numberOfResults': 20,
                                 }
                             }
             if filters:
@@ -151,12 +151,12 @@ class VctClient():
                             "value": player_array
                         }
                 }
-        response = self.invoke_bedrock_agent(agent_id=self.agentId,
+        raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                         agent_alias_id=self.agentAlias,
                                                         session_id=uuid + "2",
                                                         prompt = CREATE_TEAM_TEMPLATE_STR + input,
                                                         filters=filtered_players)
-
+        print(raw)
 
 
         native_request = {
@@ -166,7 +166,7 @@ class VctClient():
             "messages": [
                 {
                     "role": "user",
-                    "content": [{"type": "text", "text": PARSE_CREATE_TEAM_TEMPLATE_STR + response}],
+                    "content": [{"type": "text", "text": PARSE_CREATE_TEAM_TEMPLATE_STR + raw}],
                 }
             ],
         }
@@ -176,7 +176,7 @@ class VctClient():
 
         # Extract and print the response text.
         response_text = model_response["content"][0]["text"]
-        return response_text
+        return response_text + "\n[original_output]\n" + raw + "\n[/original_output]"
     
     def edit_team(self, input, current_team, uuid):
         print(self.describe_team(current_team) + input + EDIT_TEAM_TEMPLATE_STR)
@@ -202,7 +202,7 @@ class VctClient():
 
         # Extract and print the response text.
         response_text = model_response["content"][0]["text"]
-        return response_text
+        return response_text + "\n[original_output]\n" + raw + "\n[/original_output]"
     # def search_kb(self, input, uuid):
 
     #     raw = self.invoke_bedrock_agent(agent_id=self.agentId,
@@ -312,7 +312,7 @@ if __name__ == "__main__":
     jing = str(uuid.uuid4())
 
     bedrock_client = VctClient()
-    print(bedrock_client.create_query("who has the lowest headshot percentage", jing))
+    print(bedrock_client.create_team("create a vct international team", jing))
     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()

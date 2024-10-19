@@ -82,34 +82,16 @@ The input is as follows:
 PARSE_CREATE_TEAM_TEMPLATE_STR = """
 You will receive an output from a Valorant team creator bot that creates a team composition. Your task is to parse the output and organize the information into distinct tags for further use in a program.
 
-If the output is for creating or editing a team composition, it will include a list of players, strengths, weaknesses. Separate the output into the following categories:
+Find the following information:
 
 [players]: A list of the names of the players selected, separated by commas
-[strengths]: A list or description of the team’s strengths.
-[weaknesses]: A list or description of the team’s weaknesses.
-[original_output]: The original output string from the Valorant team creator bot.
 
-
-Make sure that each section is wrapped in distinct exit tags and that only relevant sections are included. For example:
-
+Your output should be the player information and nothing else. Example:
 [players]
 Player1, Player2, Player3, Player4, Player5
 [/players]
 
-[strengths]
-Strong agent synergy, High fragging power
-[/strengths]
-
-[weaknesses]
-Lack of experience on certain maps
-[/weaknesses]
-
-[original_output]
-<Original bot output here>
-[/original_output]
-
-
-If any sections (such as weaknesses) are not relevant, you can omit those sections. The input is as follows: \n
+The input is as follows: \n
 """
 
 EDIT_TEAM_TEMPLATE_STR = """
@@ -131,32 +113,16 @@ Weaknesses and downgrades of the change
 PARSE_EDIT_TEAM_TEMPLATE_STR = """"
 You will receive an output from a Valorant team editor bot that edits a team composition. Your task is to parse the output and organize the information into distinct tags for further use in a program.
 
-Separate the output into the following categories:
+Find the following information:
 
 [players]: This should include the new team of five players, reflecting any edits if new players were added or swapped
-[strengths]: A list or description of the team’s improvements compared to the old team.
-[weaknesses]: A list or description of the team’s weaknesses compared to the old team.
-[original_output]: The original output string from the Valorant team editor bot.
 
-Make sure that each section is wrapped in distinct exit tags and that only relevant sections are included. For example:
-
+Your output should only contain the player information. For example:
 [players]
 Player1, Player2, Player3, Player4, Player5
 [/players]
 
-[strengths]
-Stronger agent synergy, Higher fragging power
-[/strengths]
-
-[weaknesses]
-Lack of experience on certain maps
-[/weaknesses]
-
-[original_output]
-<Original bot output here>
-[/original_output]
-
-If any sections (such as weaknesses) are not relevant, you can omit those sections. The input is as follows: \n
+The input is as follows: \n
 """
 
 KB_SEARCH_TEMPLATE_STR = """
