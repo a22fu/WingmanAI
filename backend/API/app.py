@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from API.bedrock import VctClient  # Import your class
 from flask_cors import CORS
 
-import uuid
 app = Flask(__name__)
 
 CORS(app)

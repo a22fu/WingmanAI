@@ -1,3 +1,4 @@
+import os
 import boto3
 from botocore.client import BaseClient
 from botocore.exceptions import ClientError
@@ -5,12 +6,12 @@ import uuid
 import json
 import awswrangler as wr  
 
-from API.prompt_templates import *
-# from prompt_templates import *
+# from API.prompt_templates import *
+from prompt_templates import *
 
-# load_dotenv()
-# agent_role = os.environ.get('AGENT_ROLE')
 
+aws_access_key_id = os.getenv('AWS_ACCESS_KEY')
+aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS')
 
 class VctClient():
 
@@ -20,17 +21,25 @@ class VctClient():
         self.agentId = "VMPZXQYLQ0"
         self.agentAlias = "T076UHLG01"
         self.model_id = "anthropic.claude-instant-v1"
-        self.client = boto3.client("bedrock-runtime", region_name="us-east-1")
+        self.client = boto3.client("bedrock-runtime", 
+        region_name="us-east-1",
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key
+)
 
     def return_runtime_client(self, run_time=True) -> BaseClient:
         if run_time:
             bedrock_client = boto3.client(
                 service_name="bedrock-agent-runtime",
-                region_name=self.region_name)
+                region_name=self.region_name,
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key)
         else:
-            bedrock_client = boto3.client(
+            bedrock_client = boto3.client( 
                 service_name="bedrock-agent",
-                region_name=self.region_name)
+                region_name=self.region_name,    
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key)
 
         return bedrock_client
 
@@ -299,12 +308,12 @@ class VctClient():
         response_text = model_response["content"][0]["text"]
         
         return response_text
-# if __name__ == "__main__":
-#     jing = str(uuid.uuid4())
+if __name__ == "__main__":
+    jing = str(uuid.uuid4())
 
-#     bedrock_client = VctClient()
-#     print(bedrock_client.analyze_team("what players are on edg", [], jing))
-#     # bedrock_runtime_client = bedrock_client.return_runtime_client()
+    bedrock_client = VctClient()
+    print(bedrock_client.analyze_team("what players are on edg", [], jing))
+    # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()
 #     # print(agents)
