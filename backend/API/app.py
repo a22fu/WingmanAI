@@ -35,7 +35,7 @@ def build_team():
             result = team_builder.analyze_team(input, team, sessionId)
             return result
         case "4":
-            result = team_builder.create_query(input, sessionId)
+            result = team_builder.create_query(input)
             return result
         # Failed
         case "5":
