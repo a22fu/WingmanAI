@@ -97,7 +97,7 @@ class VctClient():
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 100,
-            "temperature": 0.1,
+            "temperature": 0,
             "messages": [
                 {
                     "role": "user",
@@ -118,7 +118,7 @@ class VctClient():
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 100,
-            "temperature": 0.1,
+            "temperature": 0,
             "messages": [
                 {
                     "role": "user",
@@ -139,7 +139,7 @@ class VctClient():
         print(filters)
         player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                     agent_alias_id=self.agentAlias,
-                                                   session_id=uuid,
+                                                   session_id=uuid + "2",
                                                    prompt = GATHER_TEAM_TEMPLATE_STR,
                                                    filters=filters)
         print(player_list)
@@ -153,7 +153,7 @@ class VctClient():
                 }
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                         agent_alias_id=self.agentAlias,
-                                                        session_id=uuid + "2",
+                                                        session_id=uuid,
                                                         prompt = CREATE_TEAM_TEMPLATE_STR + input,
                                                         filters=filtered_players)
         print(raw)
@@ -162,7 +162,7 @@ class VctClient():
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 2048,
-            "temperature": 0.1,
+            "temperature": 0,
             "messages": [
                 {
                     "role": "user",
@@ -188,7 +188,7 @@ class VctClient():
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 2048,
-            "temperature": 0.1,
+            "temperature": 0,
             "messages": [
                 {
                     "role": "user",
@@ -240,7 +240,7 @@ class VctClient():
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 2048,
-            "temperature": 0.1,
+            "temperature": 0,
             "messages": [
                 {
                     "role": "user",
@@ -314,8 +314,8 @@ class VctClient():
 #     jing = str(uuid.uuid4())
 
 #     bedrock_client = VctClient()
-#     print(bedrock_client.create_query("what was his headshot", jing))
-    # bedrock_runtime_client = bedrock_client.return_runtime_client()
+#     print(bedrock_client.create_team("Build a team using only players from VCT Challengers. Assign roles to each player and explain why this composition would be effective in a competitive match.", jing))
+#     # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()
 #     # print(agents)

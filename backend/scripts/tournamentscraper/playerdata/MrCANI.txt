@@ -5,3 +5,5 @@ MrCANI played the following agents in Champions Tour 2024 China: Ascension:
 - In VALORANT China National Competition: Season 2, They played on team Xi Lai Gaming, finished 1st and placed in the top 25%. MrCANI was struggling with a rating of 0, with a first contact per round of 0.25.
 MrCANI played the following agents in VALORANT China National Competition: Season 2:
   - played 21 rounds on skye, invalid rating with a rating of N/A and first contact per round of 0.14. played 28 rounds on breach, invalid rating with a rating of N/A and first contact per round of 0.25. played 16 rounds on gekko, invalid rating, and aggressively with a rating of N/A and first contact per round of 0.38.
+Here are some more details about MrCANI's playstyle:
+ MrCANI is somewhat supportive, having fairly average assists per rounds.

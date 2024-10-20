@@ -8,3 +8,5 @@ BerLIN played the following agents in Champions Tour 2024: China Stage 2:
 - In Champions Tour 2024: Masters Shanghai, They played on team FunPlus Phoenix, finished Unknown placement and placed unknown. BerLIN was struggling with a rating of 0, with a first contact per round of 0.24.
 BerLIN played the following agents in Champions Tour 2024: Masters Shanghai:
   - played 112 rounds on harbor, invalid rating with a rating of N/A and first contact per round of 0.24. played 75 rounds on astra, invalid rating with a rating of N/A and first contact per round of 0.24. played 24 rounds on omen, invalid rating with a rating of N/A and first contact per round of 0.25.
+Here are some more details about BerLIN's playstyle:
+ BerLIN has average aim. BerLIN struggles in clutch situations and rounds. BerLIN is somewhat supportive, having fairly average assists per rounds.
