@@ -29,13 +29,12 @@ const ChatWindow = ({ messages, onSendMessage, items, hiddenIds }) => {
           <PlayerBox containerStyle = {containerStyle} id="container4" items={items.container4} hiddenIds={hiddenIds} />
           <PlayerBox containerStyle = {containerStyle} id="container5" items={items.container5} hiddenIds={hiddenIds} />
         </div>
-
+      <div style={{height:'2vh', backgroundColor:'#2A2A2E'}}></div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
           <ChatMessage key={index} sender={msg.sender} text={msg.text} />
         ))}
       </div>
-
       <ChatInput onSendMessage={onSendMessage} />
     </div>
   );
