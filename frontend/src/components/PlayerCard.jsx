@@ -2,7 +2,6 @@ import * as React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from '@dnd-kit/utilities';
 import data from '../players/imgdict.json'
-import playerimg from "../resources/blank_player.png"
 export function Item(props) {
   const { id, isSmall } = props;
 
@@ -13,7 +12,7 @@ export function Item(props) {
   var agentName = data[id];
     return (
     <div style={style} className="player-card">
-      <img src={process.env.PUBLIC_URL + agentName + ".png"} alt="Item" className="player-image" />
+      <img src={process.env.PUBLIC_URL + "/agent-icons/" + agentName + ".png"} alt="Item" className="player-image" />
       <div className="player-text">{id}</div> {/* Display the id as text */}
     </div>
   );
