@@ -31,15 +31,11 @@ class VctClient():
         if run_time:
             bedrock_client = boto3.client(
                 service_name="bedrock-agent-runtime",
-                region_name=self.region_name,
-    aws_access_key_id=aws_access_key_id,
-    aws_secret_access_key=aws_secret_access_key)
+                region_name=self.region_name)
         else:
             bedrock_client = boto3.client( 
                 service_name="bedrock-agent",
-                region_name=self.region_name,    
-    aws_access_key_id=aws_access_key_id,
-    aws_secret_access_key=aws_secret_access_key)
+                region_name=self.region_name)
 
         return bedrock_client
 
@@ -151,6 +147,7 @@ class VctClient():
                             "value": player_array
                         }
                 }
+    
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                         agent_alias_id=self.agentAlias,
                                                         session_id=uuid,
@@ -310,12 +307,12 @@ class VctClient():
         response_text = model_response["content"][0]["text"]
         
         return response_text
-# if __name__ == "__main__":
-#     jing = str(uuid.uuid4())
+if __name__ == "__main__":
+    jing = str(uuid.uuid4())
 
-#     bedrock_client = VctClient()
-#     print(bedrock_client.create_team("Build a team using only players from VCT Challengers. Assign roles to each player and explain why this composition would be effective in a competitive match.", jing))
-#     # bedrock_runtime_client = bedrock_client.return_runtime_client()
+    bedrock_client = VctClient()
+    print(bedrock_client.create_team("Build a team using only players from VCT Challengers. Assign roles to each player and explain why this composition would be effective in a competitive match.", jing))
+    # bedrock_runtime_client = bedrock_client.return_runtime_client()
 
 #     # agents = bedrock_client.list_agents()
 #     # print(agents)

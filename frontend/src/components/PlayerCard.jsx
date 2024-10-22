@@ -10,13 +10,10 @@ export function Item(props) {
     width: isSmall ? "4.6vw" : "9vw",
     height: isSmall ? "4.6vw" : "9vw",
   };
-  var image = data[id]
-  if (!image){
-    image = playerimg
-  }
-  return (
+  var agentName = data[id];
+    return (
     <div style={style} className="player-card">
-      <img src={image} alt="Item" className="player-image" />
+      <img src={process.env.PUBLIC_URL + agentName + ".png"} alt="Item" className="player-image" />
       <div className="player-text">{id}</div> {/* Display the id as text */}
     </div>
   );
