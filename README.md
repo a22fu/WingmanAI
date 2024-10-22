@@ -1,7 +1,7 @@
 # VCTHack
 The VCTHack chatbot creates a team and provides insights on each player's role, as well as modify based on suggestions provided by the user. 
 
-**Link to project:** link
+**Link to project:** https://vcthack.onrender.com/
 
 ## How It's Made:
 
