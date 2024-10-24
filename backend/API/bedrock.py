@@ -20,8 +20,8 @@ class VctClient():
                  region_name="us-east-1"):
         self.region_name = region_name
         self.agentId = "VMPZXQYLQ0"
-        # self.agentAlias = "T076UHLG01" # Sonnet 3.5
-        self.agentAlias = "GPIDD0QW8L" # Sonnet 3
+        self.agentAlias = "T076UHLG01" # Sonnet 3.5
+        # self.agentAlias = "GPIDD0QW8L" # Sonnet 3
         self.model_id = "anthropic.claude-instant-v1"
         self.client = boto3.client("bedrock-runtime", 
         region_name="us-east-1",
@@ -134,7 +134,7 @@ class VctClient():
                         }
                 }
         print(player_list)
-
+        time.sleep(61)
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                         agent_alias_id=self.agentAlias,
                                                         session_id=uuid,
