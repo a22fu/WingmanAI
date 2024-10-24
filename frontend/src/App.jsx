@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import ChatWindow from "./components/ChatWindow.jsx";
-import buildTeam from "./API/buildAPI.js";
+import {buildTeam }from "./API/buildAPI.js";
+import { changeTeam } from "./API/buildAPI.js";
 import PlayerCard from "./components/PlayerCard.jsx";
 import vctlogo from "./resources/vct_logo.png"
+import wingman from "./resources/Wingman.png"
 import {
   DragOverlay,
   DndContext,
@@ -59,8 +61,8 @@ function App() {
   return (
     <div className="App">
       <div className="top">
-        <img src= {vctlogo} alt="val-logo" ></img>
-          <h>VCT Esports Manager</h>
+        <img src= {wingman} alt="val-logo" ></img>
+          <h>Wingman</h>
       </div>
       <div className="main">
         <DndContext
@@ -119,21 +121,25 @@ function App() {
           overItem = prevItems[overContainer][0];
         }
 
-        if(overItem){ // swap or place if doesnt exist
+        if(overItem){ // swap if exists or place if doesnt exist
 
-          if(overContainer === "container6"){
+          if(overContainer === "container6"){ // remove a player
+            console.log(prevItems)
             return {
               ...prevItems,
               [activeContainer]: [], // Place the overItem in the active container
               [overContainer]: [...prevItems[overContainer], activeItem], // Place the activeItem in the over container
             };
-          }else if(activeContainer === "container6"){
+          }else if(activeContainer === "container6"){ // Swap from search.
+            console.log(activeItem)
+            console.log(overItem)
+            console.log(prevItems)
             return {
               ...prevItems,
               [activeContainer]: prevItems[activeContainer].map(item =>
-                item === activeItem ? overItem : item // Replace activeItem with overItem
+                item === activeItem ? overItem : item 
               ),
-              [overContainer]: [activeItem], // Append activeItem to overContainer
+              [overContainer]: [activeItem], 
             };
           }else{
             

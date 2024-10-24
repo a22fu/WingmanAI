@@ -54,9 +54,29 @@ function parseValorantOutput(output) {
     };
 }
 
+export async function changeTeam(oldTeam, oldPlayer, newPlayer) {
+    try {
+
+        // Send a POST request to the Flask API
+
+        const response = await axios.post('https://vctbedrockapi.onrender.com/change_team', {
+            parameters: {
+                oldTeam: oldTeam,
+                oldPlayer: oldPlayer,
+                newPlayer: newPlayer,
+            }
+        });
+        console.log(response)
 
 
-async function buildTeam(user_input, items, setItems) {
+        return response.data
+    } catch (error) {
+        console.error('Error:', error);
+        throw error
+    }
+}
+
+export async function buildTeam(user_input, items, setItems) {
     try {
         console.log(user_input); // Log for debugging; consider removing or using a logger in production
 
@@ -103,4 +123,3 @@ async function buildTeam(user_input, items, setItems) {
     }
 };
 
-export default buildTeam;
