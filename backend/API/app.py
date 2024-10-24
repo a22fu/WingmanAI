@@ -50,6 +50,7 @@ def change_team():
     new_player = data['parameters']['newPlayer']
     team_builder = VctClient()
     prompt = ""
+    print(old_team)
     if old_player and new_player:
         prompt = (
             f"Given the team: {', '.join(old_team)}, "
