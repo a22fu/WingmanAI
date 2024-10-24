@@ -44,7 +44,7 @@ class VctClient():
     def invoke_instant(self, input):
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
-            "max_tokens": 100,
+            "max_tokens": 1520,
             "temperature": 0,
             "messages": [
                 {
@@ -195,7 +195,8 @@ Do not mention any numbers, ratings, statistics, or search results directly in t
 
 
 
-# vct= VctClient()
+vct= VctClient()
+print(vct.analyze_team("can you give me the recent tournament performances of this team?",["Riens", "ZmjjKK","leaf","Kicks", "Smoggy"], '123456'))
 # old_team = ["TenZ", "Addicted", "Add3r", "adora", "Derke"]
 # old_player = "TenZ"
 # new_player = "Leaf"
