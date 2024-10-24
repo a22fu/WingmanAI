@@ -1,5 +1,5 @@
-# Wingman
-The Wingman chatbot creates a team and provides insights on each player's role, as well as modifies based on suggestions provided by the user. Our chatbot is powered by AWS Bedrock to provide live insights, recommendations and answers to users.
+# Welcome to WingmanAI - Your personalized VCT helper
+The Wingman chatbot creates a professional Valorant roster and provides insights on each player's role, as well as provides modifications based on suggestions provided by the user. Wingman can also answer questions about your team, VCT and team compositions provided. Our chatbot is powered by AWS Bedrock to provide live insights, recommendations and answers to users.
 
 **Link to project:** https://vcthack.onrender.com/
 
