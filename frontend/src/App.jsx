@@ -162,8 +162,7 @@ function App() {
           if(overContainer === "container6"){ // remove a player
             console.log(prevItems)
             if(isAnalysisMode){
-              var old_team = []
-              old_team.push(...[prevItems.container1, prevItems.container2, prevItems.container3, prevItems.container4, prevItems.container5]);
+              var old_team = prevItems.container1.concat(prevItems.container2).concat(prevItems.container3).concat(prevItems.container4).concat(prevItems.container5)
 
               const newMessages = [...messages];
               changeTeam(old_team, activeItem, "", setMessages, newMessages);
@@ -179,8 +178,8 @@ function App() {
             console.log(overItem)
             console.log(prevItems)
             if(isAnalysisMode){
-              var old_team = []
-              old_team.push(...[prevItems.container1, prevItems.container2, prevItems.container3, prevItems.container4, prevItems.container5]);
+              var old_team = prevItems.container1.concat(prevItems.container2).concat(prevItems.container3).concat(prevItems.container4).concat(prevItems.container5)
+
 
               const newMessages = [...messages];
               changeTeam(old_team, activeItem, overItem, setMessages, newMessages);
@@ -204,8 +203,8 @@ function App() {
       }else{
         if(activeContainer === "container6"){
           if(isAnalysisMode){
-          var old_team = []
-            old_team.push(...[prevItems.container1, prevItems.container2, prevItems.container3, prevItems.container4, prevItems.container5]);
+            var old_team = prevItems.container1.concat(prevItems.container2).concat(prevItems.container3).concat(prevItems.container4).concat(prevItems.container5)
+
 
             const newMessages = [...messages];
             changeTeam(old_team, "", activeItem, setMessages, newMessages);
