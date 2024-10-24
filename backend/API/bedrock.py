@@ -20,7 +20,8 @@ class VctClient():
                  region_name="us-east-1"):
         self.region_name = region_name
         self.agentId = "VMPZXQYLQ0"
-        self.agentAlias = "T076UHLG01"
+        # self.agentAlias = "T076UHLG01" # Sonnet 3.5
+        self.agentAlias = "GPIDD0QW8L" # Sonnet 3
         self.model_id = "anthropic.claude-instant-v1"
         self.client = boto3.client("bedrock-runtime", 
         region_name="us-east-1",
@@ -114,14 +115,14 @@ class VctClient():
         return self.invoke_instant(GET_FILTERS_TEMPLATE_STR + input)
 
     def create_team(self, input, uuid):
-        # filters = json.loads(self.get_filters(input))
-        # print(filters)
-        # player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
-        #                                             agent_alias_id=self.agentAlias,
-        #                                            session_id=uuid + "2",
-        #                                            prompt = GATHER_TEAM_TEMPLATE_STR,
-        #                                            filters=filters)
-        player_list = "ZmjjKK, CHICHOO, RieNs, Smoggy, BuZz, Sayf, leaf, something, Wo0t, JonahP, AAAAY, LuoK1ng, Kai, qRaxs, Autumn, BerLIN, runneR, Kicks"
+        filters = json.loads(self.get_filters(input))
+        print(filters)
+        player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                    agent_alias_id=self.agentAlias,
+                                                   session_id=uuid + "2",
+                                                   prompt = GATHER_TEAM_TEMPLATE_STR,
+                                                   filters=filters)
+        # player_list = "ZmjjKK, CHICHOO, RieNs, Smoggy, BuZz, Sayf, leaf, something, Wo0t, JonahP, AAAAY, LuoK1ng, Kai, qRaxs, Autumn, BerLIN, runneR, Kicks"
         player_array = player_list.split(', ')
 
         # Add the guide
@@ -177,4 +178,34 @@ class VctClient():
         query = self.invoke_instant(SEARCH_STATS_TEMPLATE_STR + input)
         df = wr.athena.read_sql_query(sql=query, database="default")
         return self.invoke_instant(input + SQL_QUERY_PARSER_TEMPLATE_STR +  str(df))
+    def change_team(self, input, team):
+        filtered_players = {
+            "in": {
+                    "key": "player",
+                    "value": team
+                }
+        }
+        return self.invoke_bedrock_agent(agent_id=self.agentId,
+                                                        agent_alias_id=self.agentAlias,
+                                                        session_id="123",
+                                                        prompt = input + """
+Do not mention any numbers, ratings, statistics, or search results directly in the output. Only mention qualitative reasons (e.g., "strong in attack", "consistent on defense").Y
+""",
+                                                        filters = filtered_players)
 
+
+
+# vct= VctClient()
+# old_team = ["TenZ", "Addicted", "Add3r", "adora", "Derke"]
+# old_player = "TenZ"
+# new_player = "Leaf"
+# prompt = (
+#             f"Given the team: {', '.join(old_team)}, "
+#             f"analyzing the replacement of '{old_player}' with '{new_player}'. "
+#             "Please provide a list of strengths and potential challenges from making this replacement."
+#         )
+# old_team.append(new_player)
+# old_team.append(old_player)
+
+# print(vct.change_team(prompt, old_team))
+# print(vct.invoke_instant("create one alliterative team names using a name from the following team:" + "ZzmjjKK, RieNs, CHICHOO, Wo0t, Sayf" + ". Once you created the name, output it alone"))

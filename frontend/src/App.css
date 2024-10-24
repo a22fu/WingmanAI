@@ -6,17 +6,37 @@
 .App {
   height: 100vh;
 }
-.top{
+.top {
   display: flex;
-  align-items: center;
+  justify-content: space-between; /* Push .left to the left and .right to the right */
+  align-items: center; /* Center content vertically */
   background-color: #141415;
   height: 7vh;
   color: rgb(199, 48, 48);
-  font-size: 4.5vh;
   font-weight: bold;
   font-family: vlrFont;
+  padding: 0 10px; /* Add padding for better spacing */
+}
+
+.left {
+  display: flex; /* Align items inside .left horizontally */
+  font-size: 4.5vh;
+  height: 7vh;
+  align-items: center;
+}
+.switch{
+  padding-top: 5%;
 
 }
+.right {
+  display: flex; /* Align items inside .right horizontally */
+  font-size: 2vh;
+  padding-bottom: 0.5%;
+  align-items: center;
+  padding-right: 1%;
+}
+
+
 
 .top h {
   padding-top: 30px;
@@ -36,6 +56,8 @@ padding-top: 10px;
   background-color: #f4f4f4;
   height: 93vh;
 }
+
+
 
 body,html {
   margin: 0;

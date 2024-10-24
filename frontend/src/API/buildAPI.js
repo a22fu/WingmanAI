@@ -54,7 +54,7 @@ function parseValorantOutput(output) {
     };
 }
 
-export async function changeTeam(oldTeam, oldPlayer, newPlayer) {
+export async function changeTeam(oldTeam, removedPlayer, addedPlayer, setMessages, newMessages) {
     try {
 
         // Send a POST request to the Flask API
@@ -62,14 +62,15 @@ export async function changeTeam(oldTeam, oldPlayer, newPlayer) {
         const response = await axios.post('https://vctbedrockapi.onrender.com/change_team', {
             parameters: {
                 oldTeam: oldTeam,
-                oldPlayer: oldPlayer,
-                newPlayer: newPlayer,
+                oldPlayer: removedPlayer,
+                newPlayer: addedPlayer,
             }
         });
         console.log(response)
 
+        setMessages([...newMessages, { sender: "bot", text: response.data }]);
 
-        return response.data
+        
     } catch (error) {
         console.error('Error:', error);
         throw error

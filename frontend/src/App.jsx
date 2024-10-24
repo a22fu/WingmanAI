@@ -5,6 +5,10 @@ import { changeTeam } from "./API/buildAPI.js";
 import PlayerCard from "./components/PlayerCard.jsx";
 import vctlogo from "./resources/vct_logo.png"
 import wingman from "./resources/Wingman.png"
+import { alpha, styled } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import {
   DragOverlay,
   DndContext,
@@ -18,6 +22,20 @@ import {
 import "./App.css";
 import SearchWindow from "./components/SearchWindow.jsx";
 import playerdata from "./players/playerdata.jsx";
+
+
+const RedSwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: red[600],
+    '&:hover': {
+      backgroundColor: alpha(red[600], theme.palette.action.hoverOpacity),
+    },
+  },
+  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+    backgroundColor: red[600],
+  },
+}));
+
 function App() {
   const [items, setItems] = useState({
     container1: [],
@@ -29,7 +47,13 @@ function App() {
   });
   const [messages, setMessages] = useState([]);
   const [activeId, setActiveId] = useState();
+  const [isAnalysisMode, setIsAnalysisMode] = useState(false);
 
+  // Handle switch change
+  const handleSwitchChange = (event) => {
+    setIsAnalysisMode(event.target.checked);
+    console.log('Switch Value:', event.target.checked); // Log the value
+  };
 
   const handleSendMessage = async (message) => {
     console.log(message + " received");
@@ -61,8 +85,20 @@ function App() {
   return (
     <div className="App">
       <div className="top">
+        <div className="left">
         <img src= {wingman} alt="val-logo" ></img>
           <h>Wingman</h>
+        </div>
+      <div className="right">
+        <h>Analysis Mode</h>
+            <FormControlLabel
+            value="end"
+            control={<RedSwitch/>}
+            labelPlacement="start"
+            className="switch"
+            onChange={handleSwitchChange} 
+          />
+        </div>
       </div>
       <div className="main">
         <DndContext
@@ -125,6 +161,14 @@ function App() {
 
           if(overContainer === "container6"){ // remove a player
             console.log(prevItems)
+            if(isAnalysisMode){
+              var old_team = []
+              old_team.push(...[prevItems.container1, prevItems.container2, prevItems.container3, prevItems.container4, prevItems.container5]);
+
+              const newMessages = [...messages];
+              changeTeam(old_team, activeItem, "", setMessages, newMessages);
+            }
+
             return {
               ...prevItems,
               [activeContainer]: [], // Place the overItem in the active container
@@ -134,6 +178,13 @@ function App() {
             console.log(activeItem)
             console.log(overItem)
             console.log(prevItems)
+            if(isAnalysisMode){
+              var old_team = []
+              old_team.push(...[prevItems.container1, prevItems.container2, prevItems.container3, prevItems.container4, prevItems.container5]);
+
+              const newMessages = [...messages];
+              changeTeam(old_team, activeItem, overItem, setMessages, newMessages);
+            }
             return {
               ...prevItems,
               [activeContainer]: prevItems[activeContainer].map(item =>
@@ -152,6 +203,13 @@ function App() {
     }
       }else{
         if(activeContainer === "container6"){
+          if(isAnalysisMode){
+          var old_team = []
+            old_team.push(...[prevItems.container1, prevItems.container2, prevItems.container3, prevItems.container4, prevItems.container5]);
+
+            const newMessages = [...messages];
+            changeTeam(old_team, "", activeItem, setMessages, newMessages);
+          }
           return {
             ...prevItems,
             [activeContainer]: prevItems[activeContainer].filter(item =>
