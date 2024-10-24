@@ -3,6 +3,7 @@ import boto3
 from botocore.client import BaseClient
 from botocore.exceptions import ClientError
 import uuid
+import time
 import json
 import awswrangler as wr  
 
@@ -114,6 +115,7 @@ class VctClient():
 
     def create_team(self, input, uuid):
         filters = json.loads(self.get_filters(input))
+        time.sleep(60)
         player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                     agent_alias_id=self.agentAlias,
                                                    session_id=uuid + "2",
@@ -129,7 +131,8 @@ class VctClient():
                             "value": player_array
                         }
                 }
-    
+        time.sleep(60)
+
         raw = self.invoke_bedrock_agent(agent_id=self.agentId,
                                                         agent_alias_id=self.agentAlias,
                                                         session_id=uuid,
