@@ -179,10 +179,8 @@ function App() {
             console.log(prevItems)
             if(isAnalysisMode){
               var old_team = prevItems.container1.concat(prevItems.container2).concat(prevItems.container3).concat(prevItems.container4).concat(prevItems.container5)
-
-
               const newMessages = [...messages];
-              changeTeam(old_team, activeItem, overItem, setMessages, newMessages);
+              changeTeam(old_team, overItem,activeItem, setMessages, newMessages);
             }
             return {
               ...prevItems,
@@ -204,7 +202,6 @@ function App() {
         if(activeContainer === "container6"){
           if(isAnalysisMode){
             var old_team = prevItems.container1.concat(prevItems.container2).concat(prevItems.container3).concat(prevItems.container4).concat(prevItems.container5)
-
 
             const newMessages = [...messages];
             changeTeam(old_team, "", activeItem, setMessages, newMessages);
