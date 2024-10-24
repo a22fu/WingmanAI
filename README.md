@@ -1,4 +1,4 @@
-# Wingman
+# WingmanAI
 The Wingman chatbot creates a team and provides insights on each player's role, as well as modifies based on suggestions provided by the user. Our chatbot is powered by AWS Bedrock to provide live insights, recommendations and answers to users.
 
 **Link to project:** https://vcthack.onrender.com/
