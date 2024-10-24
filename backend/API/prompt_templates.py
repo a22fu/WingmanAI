@@ -136,7 +136,7 @@ Your output should be the cleaned output with no other output, do not mention th
 """
 
 SEARCH_STATS_TEMPLATE_STR = """
-you are a SQL query creator designed to turn a user question into a syntactically correct SQL query. You are given the following valorant player stat table:
+you are a SQL query creator designed to turn a user question into a syntactically correct Athena SQL query. You are given the following valorant player stat table:
 CREATE EXTERNAL TABLE IF NOT EXISTS `default`.`vlrdata` (
   `player` string,
   `org` string,
@@ -158,7 +158,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS `default`.`vlrdata` (
   `zscore` float
 )
 where region can be one of ("amer" (Americas), "emea" (Europe, Middle East, Africa), "cn" (China), "ap" (Asia-Pacific)), and league can be one of ("international" (VCT international league, tier 1 pro circuit), "challengers" (tier 2, academy league), "gc", "Game changers league, for marginilized groups")
-
+If a playername is mentioned, do a case insensitive search by setting column and player to LOWER
 YOU MUST USE DOUBLE QUOTES SURROUNDING IDENTIFIERS, do not cast any variables
 Your output should only contain a syntactically correct SQL query of the following question:
 """

@@ -176,6 +176,7 @@ class VctClient():
     
     def create_query(self, input):
         query = self.invoke_instant(SEARCH_STATS_TEMPLATE_STR + input)
+        print(query)
         df = wr.athena.read_sql_query(sql=query, database="default")
         return self.invoke_instant(input + SQL_QUERY_PARSER_TEMPLATE_STR +  str(df))
     def change_team(self, input, team):
@@ -189,14 +190,14 @@ class VctClient():
                                                         agent_alias_id=self.agentAlias,
                                                         session_id="123",
                                                         prompt = input + """
-Do not mention any numbers, ratings, statistics, or search results directly in the output. Only mention qualitative reasons (e.g., "strong in attack", "consistent on defense").Y
+Do not mention any numbers, ratings, statistics, or search results directly in the output. Only mention qualitative reasons (e.g., "strong in attack", "consistent on defense").
 """,
                                                         filters = filtered_players)
 
 
 
-vct= VctClient()
-print(vct.analyze_team("can you give me the recent tournament performances of this team?",["Riens", "ZmjjKK","leaf","Kicks", "Smoggy"], '123456'))
+# vct= VctClient()
+# print(vct.create_query("what is tenz headshot rate"))
 # old_team = ["TenZ", "Addicted", "Add3r", "adora", "Derke"]
 # old_player = "TenZ"
 # new_player = "Leaf"
