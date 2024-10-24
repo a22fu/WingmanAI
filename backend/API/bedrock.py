@@ -114,13 +114,14 @@ class VctClient():
         return self.invoke_instant(GET_FILTERS_TEMPLATE_STR + input)
 
     def create_team(self, input, uuid):
-        filters = json.loads(self.get_filters(input))
-        print(filters)
-        player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
-                                                    agent_alias_id=self.agentAlias,
-                                                   session_id=uuid + "2",
-                                                   prompt = GATHER_TEAM_TEMPLATE_STR,
-                                                   filters=filters)
+        # filters = json.loads(self.get_filters(input))
+        # print(filters)
+        # player_list = self.invoke_bedrock_agent(agent_id=self.agentId,
+        #                                             agent_alias_id=self.agentAlias,
+        #                                            session_id=uuid + "2",
+        #                                            prompt = GATHER_TEAM_TEMPLATE_STR,
+        #                                            filters=filters)
+        player_list = "ZmjjKK, CHICHOO, RieNs, Smoggy, BuZz, Sayf, leaf, something, Wo0t, JonahP, AAAAY, LuoK1ng, Kai, qRaxs, Autumn, BerLIN, runneR, Kicks"
         player_array = player_list.split(', ')
 
         # Add the guide
